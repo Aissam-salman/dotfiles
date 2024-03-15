@@ -1,0 +1,20 @@
+import = ["/home/salman/.config/alacritty/themes/themes/dracula.toml"]
+
+[[keyboard.bindings]]
+chars = "\u0002T"
+key = "K"
+mods = "Control"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[window]
+decorations = "none"
+dynamic_title = true
+opacity = 0.89
+title = "Alacritty"
+
+[window.padding]
+x = 10
+y = 10

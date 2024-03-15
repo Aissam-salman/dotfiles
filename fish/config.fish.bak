@@ -45,17 +45,17 @@ end
 
 # User paths
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.bin $HOME/.cargo/bin $HOME/.bun/bin $HOME/.symfony5/bin $HOME/.local/bin $HOME/Applications /usr/local/bin $fish_user_paths
+set -U fish_user_paths $HOME/.bin $HOME/.local/bin $HOME/Applications $fish_user_paths
 
 # Starship prompt
-if command -sq starship
-    starship init fish | source
-end
+#if command -sq starship
+#    starship init fish | source
+#end
 
 # sets tools
-set -x EDITOR nvim
-set -x VISUAL code
-set -x TERM alacritty
+set -x EDITOR nano
+set -x VISUAL nano
+#set -x TERM alacritty
 # Sets the terminal type for proper colors
 set TERM "xterm-256color"
 
@@ -190,19 +190,11 @@ end
 
 ### ALIASES ###
 
-# Changing "ls" to "exa"
-
-# confirm before overwriting something
-alias cp="cp -i"
-alias mv='mv -i'
-alias rm='rm -i'
-
-
 #list
-alias l='lsd'
-alias ls='exa -al --color=always --group-directories-first' # my preferred listing
-alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+alias ls="ls --color=auto"
+alias la="ls -a"
 alias ll="ls -alFh"
+alias l="ls"
 alias l.="ls -A | egrep '^\.'"
 alias listdir="ls -d */ > list"
 
@@ -545,7 +537,7 @@ end
 alias undopush "git push -f origin HEAD^:master"
 
 # reporting tools - install when not installed
-#neofetch
+neofetch
 #screenfetch
 #alsi
 #paleofetch
@@ -592,9 +584,3 @@ set fish_pager_color_prefix normal --bold underline
 set fish_pager_color_prefix white --bold --underline
 set fish_pager_color_progress brwhite --background=cyan
 set fish_color_search_match --background="#60AEFF"
-
-zoxide init fish | source
-
-# bun
-set --export BUN_INSTALL "$HOME/.bun"
-set --export PATH $BUN_INSTALL/bin $PATH

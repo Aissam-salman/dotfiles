@@ -8,8 +8,8 @@
 #
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
-import:
-  - ~/.config/alacritty/themes/themes/dracula.yaml
+#import:
+#  - /path/to/alacritty.yml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -22,9 +22,6 @@ import:
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
   #TERM: alacritty
-
-
-
 
 window:
   # Window dimensions (changes require restart)
@@ -42,16 +39,16 @@ window:
   # Specified in number of pixels.
   # If the position is not set, the window manager will handle the placement.
   #position:
-  #x: 0
-  #y: 0
+  #  x: 0
+  #  y: 0
 
   # Window padding (changes require restart)
   #
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
-  padding:
-    x: 10
-    y: 10
+  #padding:
+  #  x: 0
+  #  y: 0
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -65,13 +62,13 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  decorations: none
+  #decorations: full
 
   # Background opacity
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 0.89
+  opacity: 0.8
 
   # Startup Mode (changes require restart)
   #
@@ -85,10 +82,10 @@ window:
   #startup_mode: Windowed
 
   # Window title
-  title: Alacritty
+  #title: Alacritty
 
   # Allow terminal applications to change Alacritty's window title.
-  dynamic_title: true
+  #dynamic_title: true
 
   # Window class (Linux/BSD only):
   #class:
@@ -97,83 +94,71 @@ window:
     # General application class
     #general: Alacritty
 
-  # Decorations theme variant
+  # Decorations theme variant (Linux/BSD only)
   #
-  # Override the variant of the System theme/GTK theme/Wayland client side
-  # decorations. Commonly supported values are `Dark`, `Light`, and `None` for
-  # auto pick-up. Set this to `None` to use the default theme variant.
+  # Override the variant of the GTK theme/Wayland client side decorations.
+  # Commonly supported values are `dark` and `light`. Set this to `None` to use
+  # the default theme variant.
   #decorations_theme_variant: None
-
-  # Resize increments
-  #
-  # Prefer resizing window by discrete steps equal to cell dimensions.
-  #resize_increments: false
-
-  # Make `Option` key behave as `Alt` (macOS only):
-  #   - OnlyLeft
-  #   - OnlyRight
-  #   - Both
-  #   - None (default)
-  #option_as_alt: None
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
   # Specifying '0' will disable scrolling.
-  history: 10000
+  history: 50000
 
-  # Scrolling distance multiplier. 
-  multiplier: 3
+  # Scrolling distance multiplier.
+  #multiplier: 3
 
 # Font configuration
-#font:
+font:
   # Normal (roman) font face
-  # normal:
+  normal:
     # Font family
     #
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    # family: 'FiraCode Nerd Font'
+    family: hack
 
     # The `style` can be specified to pick a specific face.
-    #style: Regular
+    style: Regular
 
   # Bold font face
-  #bold:
+  bold:
     # Font family
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: hack
 
     # The `style` can be specified to pick a specific face.
- #style: Bold
+    style: Bold
 
   # Italic font face
-  #italic:
+  italic:
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: hack
 
     # The `style` can be specified to pick a specific face.
-    #style: Italic
+    style: Italic
 
   # Bold italic font face
-  #bold_italic:
+  bold_italic:
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: monospace
 
     # The `style` can be specified to pick a specific face.
-    #style: Bold Italic
+    style: Bold Italic
 
   # Point size
-  #size: 11.0
+  size: 11.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -199,12 +184,12 @@ scrolling:
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: false
 
-# Colors (Tomorrow Night)
-#colors:
+# Colors (ArcoLinux)
+colors:
   # Default colors
-  #primary:
-  #  background: '#1d1f21'
-  #  foreground: '#c5c8c6'
+  primary:
+   background: '#222222'
+   foreground: '#F9F9F9'
 
     # Bright and dim foreground colors
     #
@@ -296,26 +281,26 @@ scrolling:
   #  background: CellForeground
 
   # Normal colors
-  #normal:
-  #  black:   '#1d1f21'
-  #  red:     '#cc6666'
-  #  green:   '#b5bd68'
-  #  yellow:  '#f0c674'
-  #  blue:    '#81a2be'
-  #  magenta: '#b294bb'
-  #  cyan:    '#8abeb7'
-  #  white:   '#c5c8c6'
+  normal:
+    black:   '#3f3f3f'
+    red:     '#cc0000'
+    green:   '#4e9a06'
+    yellow:  '#c4a000'
+    blue:    '#94bff3'
+    magenta: '#85678f'
+    cyan:    '#06989a'
+    white:   '#dcdccc'
 
   # Bright colors
-  #bright:
-  #  black:   '#666666'
-  #  red:     '#d54e53'
-  #  green:   '#b9ca4a'
-  #  yellow:  '#e7c547'
-  #  blue:    '#7aa6da'
-  #  magenta: '#c397d8'
-  #  cyan:    '#70c0b1'
-  #  white:   '#eaeaea'
+  bright:
+    black:   '#545454'
+    red:     '#fc5454'
+    green:   '#8ae234'
+    yellow:  '#fce94f'
+    blue:    '#94bff3'
+    magenta: '#b294bb'
+    cyan:    '#93e0e3'
+    white:   '#ffffff'
 
   # Dim colors
   #
@@ -464,6 +449,9 @@ scrolling:
 # directory of the parent process will be used.
 #working_directory: None
 
+# Send ESC (\x1b) before characters when alt is pressed.
+#alt_send_esc: true
+
 # Offer IPC using `alacritty msg` (unix only)
 #ipc_socket: true
 
@@ -554,7 +542,7 @@ scrolling:
 #   - ExpandSelection
 #       Expand the selection to the current mouse cursor location.
 #
-# And optionally: open the session manager popup
+# And optionally:
 #
 # - `mods` (see key bindings)
 #mouse_bindings:
@@ -627,7 +615,6 @@ scrolling:
 #   - Quit
 #       Quit Alacritty.
 #   - ToggleFullscreen
-#   - ToggleMaximized
 #   - SpawnNewInstance
 #       Spawn a new instance of Alacritty.
 #   - CreateNewWindow
@@ -771,9 +758,6 @@ scrolling:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-key_bindings:
-  - { key: K, mods: Control, chars: "\x02\x54" }
-
 #key_bindings:
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
@@ -881,7 +865,7 @@ key_bindings:
   #- { key: M,              mods: Command,                    action: Minimize              }
   #- { key: Q,              mods: Command,                    action: Quit                  }
   #- { key: W,              mods: Command,                    action: Quit                  }
-  #- { key: N,              mods: Command,                    action: CreateNewWindow       }
+  #- { key: N,              mods: Command,                    action: SpawnNewInstance      }
   #- { key: F,              mods: Command|Control,            action: ToggleFullscreen      }
   #- { key: F,              mods: Command, mode: ~Search,     action: SearchForward         }
   #- { key: B,              mods: Command, mode: ~Search,     action: SearchBackward        }
@@ -916,3 +900,5 @@ key_bindings:
   # Highlight window damage information.
   #highlight_damage: false
 
+key_bindings:
+  -  { key: F11, action: ToggleFullscreen }
