@@ -7,17 +7,27 @@
 #  Arch Linux Post Install Setup and Config
 #-------------------------------------------------------------------------
 
-echo
-echo "INSTALLING SOFTWARE"
-echo
-echo "setup git"
+# Définition des variables pour les chemins
+AURIC_DIR="$HOME/AURIC"
+CONFIG_DIR="$HOME/.config"
+
+# Fonction pour afficher les étapes
+print_step() {
+    echo
+    echo "=== $1 ==="
+    echo
+}
+
+# Configuration Git
+print_step "Configuring Git"
 git config --global user.name "Aissam-salman"
 git config --global user.email "nasawi.lmj@gmail.com"
 git config --global credential.helper store
 
+# Installation des logiciels depuis les dépôts officiels
+print_step "Installing software from official repositories"
 PKGS=(
-    
-    # FONT 
+    # FONT
     'ttf-nerd-fonts-symbols-mono'
 
     # DEVELOPMENT ---------------------------------------------------------
@@ -62,26 +72,25 @@ for PKG in "${PKGS[@]}"; do
     sudo pacman -S "$PKG" --noconfirm --needed
 done
 
-echo
-echo "Done!"
-echo
+# Installation des logiciels AUR
+print_step "Installing AUR software"
+mkdir -p "$AURIC_DIR"
+cd "$AURIC_DIR" || exit
 
-echo
-echo "INSTALLING AUR SOFTWARE"
-echo
+if [ ! -d "$AURIC_DIR/.git" ]; then
+    git clone "https://github.com/rickellis/AURIC.git" .
+else
+    git pull origin master
+fi
 
-cd "${HOME}"
+chmod +x auric.sh
 
-echo "CLOING: AURIC"
-git clone "https://github.com/rickellis/AURIC.git"
-
-PKGS=(
-
+AUR_PKGS=(
     # TERMINAL UTILITIES --------------------------------------------------
     'wezterm'                     # Terminal emulator built on Electron
     # DEVELOPMENT ---------------------------------------------------------
-    'visual-studio-code-bin'    # Kickass text editor
-    # OTHER 
+    'visual-studio-code-bin'      # Kickass text editor
+    # OTHER
     'appimagelauncher'
     # THEMES --------------------------------------------------------------
     'gtk-theme-arc-git'
@@ -93,14 +102,12 @@ PKGS=(
     'sardi-icons'
 )
 
-
-cd ${HOME}/AURIC
-chmod +x auric.sh
-
-for PKG in "${PKGS[@]}"; do
-    ./auric.sh -i $PKG
+for PKG in "${AUR_PKGS[@]}"; do
+    ./auric.sh -i "$PKG"
 done
 
+# Installation de starship
+print_step "Installing Starship prompt"
 curl -sS https://starship.rs/install.sh | sh
 
 echo
