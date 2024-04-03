@@ -44,7 +44,7 @@ cp -rf "$NVIM_CONFIG_DIR/." "$DOTFILES_DIR/nvim/"
 
 # Ajout et commit des modifications dans le dépôt Neovim
 print_step "Committing changes in Neovim configuration"
-cd "$DOTFILES_DIR/nvim" && git add . && git commit -m "Save Neovim configuration" && git push
+cd "$DOTFILES_DIR/nvim" && git add . && git commit -m "Save Neovim configuration" && git push -f
 
 # Ajout et commit des modifications dans le dépôt lab_code
 print_step "Committing changes in lab_code project"
