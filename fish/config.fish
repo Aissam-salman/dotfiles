@@ -66,11 +66,34 @@ function ripp --argument length -d "List the last n (100) packages installed"
 end
 
 function cd
-    builtin cd $argv; and ls
+    builtin cd $argv; and l
 end
 
 ### ALIASES ###
 #
+#
+## git 
+#
+alias gc="git clone"
+alias ga="git add ."
+alias gm="git commit -m"
+alias gp="git push"
+
+function togihub
+    if test -z $argv
+        echo "Usage: togihub 'commit message'"
+    else
+        git add . && git commit -m "$argv" && git push
+    end
+end
+
+## golang 
+alias gr="go run"
+alias gb="go build"
+
+## npm 
+alias nrd="npm run dev"
+
 # confirm before overwriting something
 alias cp="cp -i"
 alias mv='mv -i'
