@@ -11,7 +11,7 @@
 DOTFILES_DIR="$HOME/dotfiles"
 CONFIG_DIR="$HOME/.config"
 NVIM_CONFIG_DIR="$CONFIG_DIR/nvim"
-LAB_CODE_DIR="$HOME/Documents/lab_code"
+LAB_CODE_DIR="$HOME/Documents/lab_code/"
 
 # Fonction pour afficher les étapes
 print_step() {
