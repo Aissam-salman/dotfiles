@@ -6,7 +6,8 @@ local config = wz.config_builder()
 ----
 --
 --Apparence
-config.color_scheme = 'AdventureTime'
+-- config.color_scheme = 'Purple Rain'
+config.color_scheme = 'Dracula'
 config.hide_tab_bar_if_only_one_tab = true
 config.window_padding = {
     left = 10,
