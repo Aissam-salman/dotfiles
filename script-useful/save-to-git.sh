@@ -48,7 +48,7 @@ cd "$DOTFILES_DIR/nvim" && git add . && git commit -m "Save Neovim configuration
 
 # Ajout et commit des modifications dans le dépôt lab_code
 print_step "Committing changes in lab_code project"
-cd "$LAB_CODE_DIR/lab_code" && git add . && git commit -m "Save lab_code project" && git push
+cd "$LAB_CODE_DIR" && git add . && git commit -m "Save lab_code project" && git push
 
 echo
 echo "Done! Your data is saved."
