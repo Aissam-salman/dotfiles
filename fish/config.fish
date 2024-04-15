@@ -72,7 +72,7 @@ end
 ### ALIASES ###
 #
 #
-## git 
+## git
 #
 alias gc="git clone"
 alias ga="git add ."
@@ -87,11 +87,14 @@ function togihub
     end
 end
 
-## golang 
+## golang
 alias gr="go run"
 alias gb="go build"
 
-## npm 
+#python
+alias py="python"
+
+## npm
 alias nrd="npm run dev"
 
 # confirm before overwriting something
@@ -110,6 +113,7 @@ alias listdir="ls -d */ > list"
 #pacman
 alias sps='sudo pacman -S'
 alias spr='sudo pacman -R'
+alias spss='sudo pacman -Ss'
 
 #fix obvious typo's
 alias cd..="cd .."
@@ -166,6 +170,8 @@ alias nb="$EDITOR ~/.bashrc"
 alias nf="$EDITOR ~/.config/fish/config.fish"
 alias nwezterm="$EDITOR ~/.config/wezterm/wezterm.lua"
 alias nnvim="$EDITOR ~/.config/nvim/init.lua"
+alias nzsh="$EDITOR ~/.zshrc"
+alias nbash="$EDITOR ~/.bashrc"
 
 #shutdown or reboot
 alias ssn="sudo shutdown now"
@@ -173,4 +179,4 @@ alias sr="reboot"
 
 zoxide init fish | source
 
-
+set -xg PYTHONPATH ~/Documents/lab_code/learn_py/module_python_perso $PYTHONPATH
