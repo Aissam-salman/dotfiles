@@ -17,7 +17,7 @@ dirs = {
 }
 
 tri_dir = Path.home() / "Downloads"
-items = [f for f in tri_dir.iterdir()]
+items = [f for f in tri_dir.iterdir() if f.is_file()]
 
 for f in items:
     output_dir = tri_dir / dirs.get(f.suffix, "Other")
