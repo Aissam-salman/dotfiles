@@ -180,3 +180,7 @@ alias sr="reboot"
 zoxide init fish | source
 
 set -xg PYTHONPATH ~/Documents/lab_code/learn_py/module_python_perso $PYTHONPATH
+
+
+
+
