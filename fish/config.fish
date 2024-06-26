@@ -76,7 +76,7 @@ end
 #
 alias gc="git clone"
 alias ga="git add ."
-alias gm="git commit -m"
+alias gm="git commit"
 alias gp="git push"
 
 function togihub
@@ -106,8 +106,6 @@ alias rm='rm -i'
 alias l='lsd'
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
 alias la='exa -a --color=always --group-directories-first'  # all files and dirs
-alias ll="ls -alFh"
-alias l.="ls -A | egrep '^\.'"
 alias listdir="ls -d */ > list"
 
 #pacman
