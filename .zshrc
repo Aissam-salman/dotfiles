@@ -90,6 +90,27 @@ alias nnvim="$EDITOR ~/.config/nvim/init.lua"
 alias nzsh="$EDITOR ~/.zshrc"
 alias nbash="$EDITOR ~/.bashrc"
 
+alias psu="sudo pacstall -U"
+alias psi="sudo pacstall -I"
+alias psr="sudo pacstall -R"
+alias pss="pacstall -S"
+
+## Docker
+alias dc='docker compose'
+alias dcu='docker compose up -d'
+alias dcd='docker compose down'
+
+## Laravel
+alias art='php artisan'
+
+## apt
+alias update='sudo apt update && sudo apt upgrade -y'
+alias install='sudo apt install -y'
+alias remove='sudo apt remove -y'
+alias autoremove='sudo apt autoremove -y'
+alias search='apt search'
+alias show='apt show'
+
 # shutdown or reboot
 alias ssn="sudo shutdown now"
 alias sr="reboot"
@@ -113,8 +134,6 @@ compctl -K    _pyenv pyenv
 
 # `znap install` adds new commands and completions.
 znap install aureliojargas/clitest zsh-users/zsh-completions
-
-eval "$(zoxide init zsh)"
 
 
 eval "$(starship init zsh)"
