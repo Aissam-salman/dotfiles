@@ -1,5 +1,15 @@
-# The following lines were added by compinstall
-ZSH=$HOME/.oh-my-zsh
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Uncomment the following line to change how often to auto-update (in days).
+zstyle ':omz:update' frequency 13
+
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+
 ZSH_THEME=""
 
 [[ -r ~/Repos/znap/znap.zsh ]] ||
@@ -12,23 +22,20 @@ znap prompt sindresorhus/pure
 # `znap source` starts plugins.
 znap source marlonrichert/zsh-autocomplete
 
+
 # `znap eval` makes evaluating generated command output up to 10 times faster.
 znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
 
-
 # `znap install` adds new commands and completions.
-znap install aureliojargas/clitest zsh-users/zsh-completions
+znap install aureliojargas/clitest zsh-users/zsh-completions zsh-users/zsh-syntax-highlighting zsh-users/zsh-autosuggestions
 
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '/home/salman/.zshrc'
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
+autoload -Uz compinit compinit # End of lines added by compinstall Lines configured by zsh-newuser-install
 # End of lines configured by zsh-newuser-install
 
-plugins=(git docker docker-compose zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search)
+plugins=(git docker docker-compose zsh-autosuggestions zsh-syntax-highlighting zsh-completions)
 
 # User paths
 export PATH="$HOME/.bin:$HOME/.local/bin:$HOME/Applications:/usr/bin:$PATH"
@@ -38,7 +45,6 @@ export PATH="$HOME/.bin:$HOME/.local/bin:$HOME/Applications:/usr/bin:$PATH"
 export EDITOR=nvim
 export VISUAL=code
 export GIT_EDITOR=nvim
-
 
 
 ### ALIASES ###
@@ -138,8 +144,10 @@ alias show='apt show'
 alias ssn="sudo shutdown now"
 alias sr="reboot"
 
-
+#tmux 
+alias sourcetmux="tmux source ~/.tmux.conf"
 
 
 eval "$(starship init zsh)"
 
+tmux
