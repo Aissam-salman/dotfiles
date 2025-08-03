@@ -8,7 +8,7 @@ export PHP_INI_SCAN_DIR="/home/salman/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
 source ~/Repos/znap/znap.zsh
 
 
-znap prompt sindresorhus/pure
+# znap prompt sindresorhus/pure
 
 # `znap eval` makes evaluating generated command output up to 10 times faster.
 znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
@@ -140,4 +140,4 @@ alias sourcetmux="tmux source ~/.tmux.conf"
 
 
 
-# eval "$(starship init zsh)"
+eval "$(starship init zsh)"

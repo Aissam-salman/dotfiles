@@ -1,0 +1,10 @@
+background_opacity 0.8
+dynamic_background_opacity yes
+window_padding_width 15
+font_size 14
+
+
+# BEGIN_KITTY_THEME
+# Catppuccin-Macchiato
+include current-theme.conf
+# END_KITTY_THEME
