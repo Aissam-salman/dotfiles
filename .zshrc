@@ -1,27 +1,14 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH="$HOME/.bin:$HOME/.local/bin:$HOME/Applications:/usr/bin:$PATH"
+export PATH="/home/salman/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/home/salman/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
 
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Uncomment the following line to change how often to auto-update (in days).
-zstyle ':omz:update' frequency 13
-
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-
-ZSH_THEME=""
 
 [[ -r ~/Repos/znap/znap.zsh ]] ||
     git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git ~/Repos/znap
 source ~/Repos/znap/znap.zsh
 
-# `znap prompt` makes your prompt visible in just 15-40ms!
+
 znap prompt sindresorhus/pure
-
-# `znap source` starts plugins.
-znap source marlonrichert/zsh-autocomplete
-
 
 # `znap eval` makes evaluating generated command output up to 10 times faster.
 znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
@@ -29,16 +16,19 @@ znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
 # `znap install` adds new commands and completions.
 znap install aureliojargas/clitest zsh-users/zsh-completions zsh-users/zsh-syntax-highlighting zsh-users/zsh-autosuggestions
 
+znap source marlonrichert/zsh-autocomplete
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-completions
+znap source zsh-users/zsh-syntax-highlighting
+
+
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '/home/salman/.zshrc'
 
-autoload -Uz compinit compinit # End of lines added by compinstall Lines configured by zsh-newuser-install
-# End of lines configured by zsh-newuser-install
-
-plugins=(git docker docker-compose zsh-autosuggestions zsh-syntax-highlighting zsh-completions)
-
-# User paths
-export PATH="$HOME/.bin:$HOME/.local/bin:$HOME/Applications:/usr/bin:$PATH"
+function update_tab_title() {
+  print -Pn "\e]2;%n@%m: %~\a"
+}
+precmd_functions+=(update_tab_title)
 
 
 # sets tools
@@ -48,7 +38,6 @@ export GIT_EDITOR=nvim
 
 
 ### ALIASES ###
-#
 #
 ## git
 #
@@ -67,6 +56,7 @@ alias py="python"
 
 ## npm
 alias nrd="npm run dev"
+alias crd="composer run dev"
 
 # confirm before overwriting something
 alias cp="cp -i"
@@ -112,7 +102,6 @@ alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Done. Now log out.'"
 alias tofish="sudo chsh $USER -s /bin/fish && echo 'Done. Now log out.'"
 alias rg="rg --sort path"
 
-alias nb="$EDITOR ~/.bashrc"
 alias nf="$EDITOR ~/.config/fish/config.fish"
 alias nwezterm="$EDITOR ~/.config/wezterm/wezterm.lua"
 alias nnvim="$EDITOR ~/.config/nvim/init.lua"
@@ -132,22 +121,23 @@ alias dcd='docker compose down'
 ## Laravel
 alias art='php artisan'
 
-## apt
-alias update='sudo apt update && sudo apt upgrade -y'
-alias install='sudo apt install -y'
-alias remove='sudo apt remove -y'
-alias autoremove='sudo apt autoremove -y'
-alias search='apt search'
-alias show='apt show'
+# ## apt
+# alias update='sudo apt update && sudo apt upgrade -y'
+# alias install='sudo apt install -y'
+# alias remove='sudo apt remove -y'
+# alias autoremove='sudo apt autoremove -y'
+# alias search='apt search'
+# alias show='apt show'
 
 # shutdown or reboot
 alias ssn="sudo shutdown now"
 alias sr="reboot"
 
+#golang 
+alias gr="go run ."
 #tmux 
 alias sourcetmux="tmux source ~/.tmux.conf"
 
 
-eval "$(starship init zsh)"
 
-tmux
+# eval "$(starship init zsh)"
