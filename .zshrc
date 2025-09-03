@@ -39,6 +39,8 @@ export GIT_EDITOR=nvim
 
 ### ALIASES ###
 #
+alias vi="$EDITOR"
+alias vim="$EDITOR"
 ## git
 #
 alias gc="git clone"
@@ -46,6 +48,19 @@ alias ga="git add ."
 alias gm="git commit -m"
 alias gp="git push"
 
+togit ()
+{
+  git add .
+  git commit -m $1
+  git push
+}
+
+mkcd(){
+  mkdir -p "$@"; 
+  cd "$_";
+}
+## C 
+alias try="cc -Wall -Wextra -Werror"
 
 ## golang
 alias gr="go run"
@@ -107,6 +122,7 @@ alias nwezterm="$EDITOR ~/.config/wezterm/wezterm.lua"
 alias nnvim="$EDITOR ~/.config/nvim/init.lua"
 alias nzsh="$EDITOR ~/.zshrc"
 alias nbash="$EDITOR ~/.bashrc"
+alias nkitty="$EDITOR ~/.config/kitty/kitty.conf"
 
 alias psu="sudo pacstall -U"
 alias psi="sudo pacstall -I"
@@ -137,7 +153,5 @@ alias sr="reboot"
 alias gr="go run ."
 #tmux 
 alias sourcetmux="tmux source ~/.tmux.conf"
-
-
 
 eval "$(starship init zsh)"
