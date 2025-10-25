@@ -48,19 +48,33 @@ alias ga="git add ."
 alias gm="git commit -m"
 alias gp="git push"
 
-togit ()
-{
+togit(){
   git add .
   git commit -m $1
   git push
+}
+
+try(){
+    local exe="a.out"
+
+    # Compiler et afficher toutes les erreurs de cc
+    if ! cc -Wall -Wextra -Werror -o "$exe" "$@"; then
+        echo "❌ Compilation échouée."
+        return 1
+    fi
+
+    # Si la compilation réussit, exécuter
+    echo "✅ Compilation réussie, exécution :"
+    ./"$exe"
 }
 
 mkcd(){
   mkdir -p "$@"; 
   cd "$_";
 }
-## C 
-alias try="cc -Wall -Wextra -Werror"
+
+
+alias ff="fzf --preview 'bat --style=numbers --color=always {}' | xargs -n 1 nvim"
 
 ## golang
 alias gr="go run"
@@ -82,7 +96,6 @@ alias rm="rm -i"
 alias l="lsd"
 alias ls="exa -al --color=always --group-directories-first" # my preferred listing
 alias la="exa -a --color=always --group-directories-first"  # all files and dirs
-alias ll="ls -alFh"
 alias l.="ls -A | egrep '^\.'"
 alias listdir="ls -d */ > list"
 
@@ -155,3 +168,11 @@ alias gr="go run ."
 alias sourcetmux="tmux source ~/.tmux.conf"
 
 eval "$(starship init zsh)"
+
+# pnpm
+export PNPM_HOME="/home/salman/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
