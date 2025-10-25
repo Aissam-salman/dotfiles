@@ -73,7 +73,7 @@ mkcd(){
   cd "$_";
 }
 
-
+alias sd="cd ~ && cd \$(find * -type d | fzf)"
 alias ff="fzf --preview 'bat --style=numbers --color=always {}' | xargs -n 1 nvim"
 
 ## golang
