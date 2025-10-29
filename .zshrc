@@ -2,47 +2,71 @@ export PATH="$HOME/.bin:$HOME/.local/bin:$HOME/Applications:/usr/bin:$PATH"
 export PATH="/home/salman/.config/herd-lite/bin:$PATH"
 export PHP_INI_SCAN_DIR="/home/salman/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
 
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-[[ -r ~/Repos/znap/znap.zsh ]] ||
-    git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git ~/Repos/znap
-source ~/Repos/znap/znap.zsh
+# Download Zinit, if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+   mkdir -p "$(dirname $ZINIT_HOME)"
+   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
 
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+# Add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
 
-# znap prompt sindresorhus/pure
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::archlinux
 
-# `znap eval` makes evaluating generated command output up to 10 times faster.
-znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
+# Load completions
+autoload -Uz compinit && compinit
 
-# `znap install` adds new commands and completions.
-znap install aureliojargas/clitest zsh-users/zsh-completions zsh-users/zsh-syntax-highlighting zsh-users/zsh-autosuggestions
+zinit cdreplay -q
 
-znap source marlonrichert/zsh-autocomplete
-znap source zsh-users/zsh-autosuggestions
-znap source zsh-users/zsh-completions
-znap source zsh-users/zsh-syntax-highlighting
+# Keybindings
+bindkey -e
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+bindkey '^[w' kill-region
 
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
-zstyle ':completion:*' completer _complete _ignored
-zstyle :compinstall filename '/home/salman/.zshrc'
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
 function update_tab_title() {
   print -Pn "\e]2;%n@%m: %~\a"
 }
 precmd_functions+=(update_tab_title)
 
-
 # sets tools
 export EDITOR=nvim
 export VISUAL=code
 export GIT_EDITOR=nvim
 
-
 ### ALIASES ###
-#
 alias vi="$EDITOR"
 alias vim="$EDITOR"
 ## git
-#
 alias gc="git clone"
 alias ga="git add ."
 alias gm="git commit -m"
@@ -137,19 +161,6 @@ alias nzsh="$EDITOR ~/.zshrc"
 alias nbash="$EDITOR ~/.bashrc"
 alias nkitty="$EDITOR ~/.config/kitty/kitty.conf"
 
-alias psu="sudo pacstall -U"
-alias psi="sudo pacstall -I"
-alias psr="sudo pacstall -R"
-alias pss="pacstall -S"
-
-## Docker
-alias dc='docker compose'
-alias dcu='docker compose up -d'
-alias dcd='docker compose down'
-
-## Laravel
-alias art='php artisan'
-
 # ## apt
 # alias update='sudo apt update && sudo apt upgrade -y'
 # alias install='sudo apt install -y'
@@ -162,12 +173,8 @@ alias art='php artisan'
 alias ssn="sudo shutdown now"
 alias sr="reboot"
 
-#golang 
-alias gr="go run ."
 #tmux 
 alias sourcetmux="tmux source ~/.tmux.conf"
-
-eval "$(starship init zsh)"
 
 # pnpm
 export PNPM_HOME="/home/salman/.local/share/pnpm"
@@ -176,3 +183,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+eval "$(fzf --zsh)"
+eval "$(starship init zsh)"
