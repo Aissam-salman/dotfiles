@@ -62,13 +62,17 @@ alias zc='cd $(z -l | fzf)'
 bind -x '"\C-f":"tmux-sessionizer"'
 
 # Alt-f pour navigation intelligente avec fzf
+# Personnalisez FZF_NAV_PATHS pour ajouter vos propres chemins
+export FZF_NAV_PATHS="${FZF_NAV_PATHS:-. ~/Work ~/Documents ~/.config ~/dotfiles}"
+
 smart_fzf_nav() {
     local selected
     
-    # Recherche dans le répertoire courant et sous-répertoires
+    # Recherche dans les chemins configurés
     # Combine fichiers et dossiers avec preview intelligent
-    selected=$(find . -mindepth 1 \( -path '*/\.*' -o -path '*/node_modules/*' -o -path '*/.git/*' \) -prune -o -print 2>/dev/null | \
-        sed 's|^\./||' | \
+    selected=$(for path in $FZF_NAV_PATHS; do
+        find "$path" -mindepth 1 \( -path '*/\.*' -o -path '*/node_modules/*' -o -path '*/.git/*' \) -prune -o -print 2>/dev/null
+    done | sed "s|^$HOME|~|" | \
         fzf --height=80% \
             --layout=reverse \
             --border \
@@ -76,7 +80,7 @@ smart_fzf_nav() {
             --preview-window=right:60% \
             --bind 'ctrl-/:toggle-preview' \
             --bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up' \
-            --header 'Enter=cd/open | Ctrl-/:toggle preview | Ctrl-d/u:scroll')
+            --header 'Enter=cd/open | Ctrl-/:toggle preview | Ctrl-d/u:scroll' | sed "s|^~|$HOME|")
     
     if [[ -n "$selected" ]]; then
         if [[ -d "$selected" ]]; then
@@ -90,12 +94,14 @@ smart_fzf_nav() {
 bind -x '"\ef":"smart_fzf_nav"'
 
 # Alt-d pour navigation dans les dossiers uniquement
+# Utilise les mêmes chemins que FZF_NAV_PATHS
 fzf_dir_nav() {
     local selected
     
-    # Recherche uniquement les dossiers
-    selected=$(find . -mindepth 1 -type d \( -path '*/\.*' -o -path '*/node_modules' -o -path '*/.git' \) -prune -o -type d -print 2>/dev/null | \
-        sed 's|^\./||' | \
+    # Recherche uniquement les dossiers dans les chemins configurés
+    selected=$(for path in ${FZF_NAV_PATHS:-. ~/Work}; do
+        find "$path" -mindepth 1 -type d \( -path '*/\.*' -o -path '*/node_modules' -o -path '*/.git' \) -prune -o -type d -print 2>/dev/null
+    done | sed "s|^$HOME|~|" | \
         fzf --height=80% \
             --layout=reverse \
             --border \
@@ -103,7 +109,7 @@ fzf_dir_nav() {
             --preview-window=right:60% \
             --bind 'ctrl-/:toggle-preview' \
             --bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up' \
-            --header 'Enter=cd to directory | Ctrl-/:toggle preview')
+            --header 'Enter=cd to directory | Ctrl-/:toggle preview' | sed "s|^~|$HOME|")
     
     if [[ -n "$selected" ]]; then
         cd "$selected" && ls -la
