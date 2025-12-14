@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Liste toutes les fenêtres de toutes les sessions
+window=$(tmux list-windows -a -F "#{session_name}:#{window_index} - #{window_name}" | \
+    fzf --height 40% --reverse --border --prompt="Switch to window: ")
+
+if [[ -n $window ]]; then
+    # Extrait session:window
+    target=$(echo "$window" | awk '{print $1}')
+    tmux select-window -t "$target"
+fi

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# ~/.local/bin/tmux-kill-session
+
+# Permet de tuer une session avec fzf
+session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | \
+    fzf --height 40% --reverse --border --prompt="Kill session: ")
+
+if [[ -n $session ]]; then
+    tmux kill-session -t "$session"
+fi

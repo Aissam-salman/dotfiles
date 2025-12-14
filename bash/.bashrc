@@ -17,7 +17,6 @@ alias zc='cd $(z -l | fzf)'  # fuzzy cd avec z
 alias vi="$EDITOR"
 alias vim="$EDITOR"
 alias sd="cd ~ && cd \$(find * -type d | fzf --preview 'ls -l {}')"
-alias ff="fzf --preview 'bat --style=numbers --color=always {}' | xargs -n 1 $EDITOR"
 alias lg="lazygit"
 alias py="python"
 alias nrd="npm run dev"
@@ -59,6 +58,59 @@ alias lab="cd ~/Work/LAB"
 alias zz='z -l'
 alias zc='cd $(z -l | fzf)'
 
+# Ctrl-f pour lancer tmux-sessionizer
+bind -x '"\C-f":"tmux-sessionizer"'
+
+# Alt-f pour navigation intelligente avec fzf
+smart_fzf_nav() {
+    local selected
+    
+    # Recherche dans le répertoire courant et sous-répertoires
+    # Combine fichiers et dossiers avec preview intelligent
+    selected=$(find . -mindepth 1 \( -path '*/\.*' -o -path '*/node_modules/*' -o -path '*/.git/*' \) -prune -o -print 2>/dev/null | \
+        sed 's|^\./||' | \
+        fzf --height=80% \
+            --layout=reverse \
+            --border \
+            --preview '[[ -d {} ]] && ls -lah --color=always {} || ([[ -f {} ]] && (bat --style=numbers --color=always {} 2>/dev/null || cat {}))' \
+            --preview-window=right:60% \
+            --bind 'ctrl-/:toggle-preview' \
+            --bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up' \
+            --header 'Enter=cd/open | Ctrl-/:toggle preview | Ctrl-d/u:scroll')
+    
+    if [[ -n "$selected" ]]; then
+        if [[ -d "$selected" ]]; then
+            cd "$selected" && ls -la
+        elif [[ -f "$selected" ]]; then
+            ${EDITOR:-vi} "$selected"
+        fi
+    fi
+}
+
+bind -x '"\ef":"smart_fzf_nav"'
+
+# Alt-d pour navigation dans les dossiers uniquement
+fzf_dir_nav() {
+    local selected
+    
+    # Recherche uniquement les dossiers
+    selected=$(find . -mindepth 1 -type d \( -path '*/\.*' -o -path '*/node_modules' -o -path '*/.git' \) -prune -o -type d -print 2>/dev/null | \
+        sed 's|^\./||' | \
+        fzf --height=80% \
+            --layout=reverse \
+            --border \
+            --preview 'ls -lah --color=always {}' \
+            --preview-window=right:60% \
+            --bind 'ctrl-/:toggle-preview' \
+            --bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up' \
+            --header 'Enter=cd to directory | Ctrl-/:toggle preview')
+    
+    if [[ -n "$selected" ]]; then
+        cd "$selected" && ls -la
+    fi
+}
+
+bind -x '"\ed":"fzf_dir_nav"'
 
 # -------------------------
 # FUNCTIONS
@@ -78,5 +130,27 @@ edit(){ $EDITOR ~/.config/$1/$2; }
 
 
 # Tmux sessions
-tma(){ tmux attach || tmux new -s "$1"; }
+# Fonction pour attacher à une session tmux existante
+tma() {
+    if [ -z "$1" ]; then
+        # Si aucun nom n'est fourni, attacher à la dernière session
+        tmux attach
+    else
+        # Attacher à une session spécifique par son nom
+        tmux attach -t "$1"
+    fi
+}
+
+# Fonction pour attacher ou créer une nouvelle session
+tmn() {
+    if [ -z "$1" ]; then
+        echo "Usage: tmn <nom-de-session>"
+        return 1
+    fi
+    
+    # Attacher si elle existe, sinon créer une nouvelle session
+    tmux attach -t "$1" 2>/dev/null || tmux new -s "$1"
+}
+
 tms(){ tmux list-sessions; }
+export PATH="$HOME/.local/bin:$PATH"
