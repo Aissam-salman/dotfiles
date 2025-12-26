@@ -1,17 +1,43 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
-FILTER="${1:-}"
+filter=""
+dry="0"
 
-echo "$SCRIPT_DIR -- $FILTER"
+while [[ $# > 0 ]]; do
+    if [[ $1 == "--dry" ]]; then
+        dry="1"
+    else
+        filter="$1"
+    fi
+    shift
+done
 
-cd "$SCRIPT_DIR" || exit 1
+log() {
+    if [[ $dry == "1" ]]; then
+        echo "[DRY_RUN]: $@"
+    else
+        echo "$@"
+    fi
+}
+
+execute() {
+    log "execute $@"
+    if [[ $dry == "1" ]]; then
+        echo "[DRY_RUN]: $@"
+    fi
+    "$@"
+}
+
+log "$script_dir -- $filter"
+
+cd "$script_dir" || exit 1
 
 find runs -maxdepth 1 -mindepth 1 -executable -type f | while read -r script; do
-    if [[ -n  "$FILTER" && "$script" != *"$FILTER"* ]]; then
-        echo "filtered: $FILTER -- $script"
+    if [[ -n  "$filter" && "$script" != *"$filter"* ]]; then
+        log "filtered: $filter -- $script"
         continue
     fi
-    "./$script"
+    execute "./$script"
 done

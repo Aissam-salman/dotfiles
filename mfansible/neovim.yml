@@ -1,7 +1,0 @@
-- name: Install Neovim
-  hosts: localhost
-  tasks:
-    - name: Install the latest version of Neovim
-      ansible.builtin.package:
-        name: neovim
-        state: latest
