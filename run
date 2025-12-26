@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+FILTER="${1:-}"
+
+echo "$SCRIPT_DIR -- $FILTER"
+
+cd "$SCRIPT_DIR" || exit 1
+
+find runs -maxdepth 1 -mindepth 1 -executable -type f | while read -r script; do
+    if [[ -n  "$FILTER" && "$script" != *"$FILTER"* ]]; then
+        echo "filtered: $FILTER -- $script"
+        continue
+    fi
+    "./$script"
+done
