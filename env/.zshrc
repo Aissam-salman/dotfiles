@@ -1,45 +1,7 @@
 # -------------------------
 # PATH
 # -------------------------
-export PATH="$HOME/.volta/bin:$HOME/.local/bin:$HOME/Applications:$PATH"
-export PATH="$HOME/.config/herd-lite/bin:$PATH"
-export PHP_INI_SCAN_DIR="$HOME/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-
-# -------------------------
-# ZINIT SETUP
-# -------------------------
-ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
-[[ ! -d "$ZINIT_HOME" ]] && mkdir -p "$(dirname $ZINIT_HOME)" && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "$ZINIT_HOME/zinit.zsh"
-
-# Plugins (lazy loaded)
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
-
-zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
-zinit cdreplay -q
-
-# -------------------------
-# COMPLETIONS
-# -------------------------
-autoload -Uz compinit && compinit -C  # cache pour speed
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-mkdir -p ~/.zsh/cache
+export PATH="$HOME/.local/bin"
 
 # -------------------------
 # KEYBINDINGS
@@ -129,36 +91,6 @@ alias ud="update_dotfiles"
 # -------------------------
 # FUNCTIONS
 # -------------------------
-# mkdir + cd
-mkcd() { mkdir -p "$@" && cd "$_"; }
-
-# Git flow rapide
-togit(){ git add . && git commit -m "$1" && git push; }
-gall(){ git add . && git commit -m "${1:-'quick commit'}" && git push; }
-
-# C/C++ compile + run
-try(){
-    exe="a.out"
-    if ! cc -Wall -Wextra -Werror -o "$exe" "$@"; then
-        echo "❌ Compilation échouée."
-        return 1
-    fi
-    echo "✅ Compilation réussie, exécution :"
-    ./"$exe"
-}
-
-valgo(){ valgrind --leak-check=full --track-origins=yes ./"$1"; }
-
-# Quick open/edit config
-edit(){ $EDITOR ~/.config/$1/$2; }
-
-
-# Tmux sessions
-tma(){ tmux attach || tmux new -s "$1"; }
-tms(){ tmux list-sessions; }
-
-# dotfiles save
-# ~/.zshrc ou fichier de fonctions
 update_dotfiles() {
     DOTFILES="$HOME/dotfiles"
 
@@ -186,7 +118,104 @@ update_dotfiles() {
     echo "✅ Dotfiles synced and pushed"
 }
 
+# Ctrl-f pour lancer tmux-sessionizer
+bind -x '"\C-f":"tmux-sessionizer"'
+
+# Alt-f pour navigation intelligente avec fzf
+# Personnalisez FZF_NAV_PATHS pour ajouter vos propres chemins
+export FZF_NAV_PATHS="${FZF_NAV_PATHS:-. ~/Work ~/Documents ~/.config ~/dotfiles}"
+
+smart_fzf_nav() {
+    local selected
+    
+    # Recherche dans les chemins configurés
+    # Combine fichiers et dossiers avec preview intelligent
+    selected=$(for path in $FZF_NAV_PATHS; do
+        find "$path" -mindepth 1 \( -path '*/\.*' -o -path '*/node_modules/*' -o -path '*/.git/*' \) -prune -o -print 2>/dev/null
+    done | sed "s|^$HOME|~|" | \
+        fzf --height=80% \
+            --layout=reverse \
+            --border \
+            --preview '[[ -d {} ]] && ls -lah --color=always {} || ([[ -f {} ]] && (bat --style=numbers --color=always {} 2>/dev/null || cat {}))' \
+            --preview-window=right:60% \
+            --bind 'ctrl-/:toggle-preview' \
+            --bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up' \
+            --header 'Enter=cd/open | Ctrl-/:toggle preview | Ctrl-d/u:scroll' | sed "s|^~|$HOME|")
+    
+    if [[ -n "$selected" ]]; then
+        if [[ -d "$selected" ]]; then
+            cd "$selected" && ls -la
+        elif [[ -f "$selected" ]]; then
+            ${EDITOR:-vi} "$selected"
+        fi
+    fi
+}
+
+bind -x '"\ef":"smart_fzf_nav"'
+
+# Alt-d pour navigation dans les dossiers uniquement
+# Utilise les mêmes chemins que FZF_NAV_PATHS
+fzf_dir_nav() {
+    local selected
+    
+    # Recherche uniquement les dossiers dans les chemins configurés
+    selected=$(for path in ${FZF_NAV_PATHS:-. ~/Work}; do
+        find "$path" -mindepth 1 -type d \( -path '*/\.*' -o -path '*/node_modules' -o -path '*/.git' \) -prune -o -type d -print 2>/dev/null
+    done | sed "s|^$HOME|~|" | \
+        fzf --height=80% \
+            --layout=reverse \
+            --border \
+            --preview 'ls -lah --color=always {}' \
+            --preview-window=right:60% \
+            --bind 'ctrl-/:toggle-preview' \
+            --bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up' \
+            --header 'Enter=cd to directory | Ctrl-/:toggle preview' | sed "s|^~|$HOME|")
+    
+    if [[ -n "$selected" ]]; then
+        cd "$selected" && ls -la
+    fi
+}
+
+bind -x '"\ed":"fzf_dir_nav"'
+
 # -------------------------
-# LS COLORS + COMPLETION
+# FUNCTIONS
 # -------------------------
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# mkdir + cd
+mkcd() { mkdir -p "$@" && cd "$_"; }
+
+# Git flow rapide
+togit(){ git add . && git commit -m "$1" && git push; }
+gall(){ git add . && git commit -m "${1:-'quick commit'}" && git push; }
+
+
+valgo(){ valgrind --leak-check=full --track-origins=yes ./"$1"; }
+
+# Quick open/edit config
+edit(){ $EDITOR ~/.config/$1/$2; }
+
+
+# Tmux sessions
+# Fonction pour attacher à une session tmux existante
+tma() {
+    if [ -z "$1" ]; then
+        # Si aucun nom n'est fourni, attacher à la dernière session
+        tmux attach
+    else
+        # Attacher à une session spécifique par son nom
+        tmux attach -t "$1"
+    fi
+}
+
+# Fonction pour attacher ou créer une nouvelle session
+tmn() {
+    if [ -z "$1" ]; then
+        echo "Usage: tmn <nom-de-session>"
+        return 1
+    fi
+    
+    # Attacher si elle existe, sinon créer une nouvelle session
+    tmux attach -t "$1" 2>/dev/null || tmux new -s "$1"
+}
+
+tms(){ tmux list-sessions; }

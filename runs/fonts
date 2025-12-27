@@ -1,0 +1,38 @@
+#!/usr/bin/env bash 
+
+# Define fonts to install
+# You can find more names at https://github.com/ryanoasis/nerd-fonts/releases
+FONTS=("Hack" "JetBrainsMono" "FiraCode" "Meslo" "RobotoMono" "UbuntuMono")
+
+# Create local font directory if it doesn't exist
+FONT_DIR="$HOME/.local/share/fonts"
+mkdir -p "$FONT_DIR"
+
+echo "Updating package list and installing unzip..."
+for font in "${FONTS[@]}"; do
+    echo "--------------------------------------------------"
+    echo "Downloading and installing: $font Nerd Font"
+    echo "--------------------------------------------------"
+    
+    # Download the zip file from GitHub releases
+    # Note: Using 'latest' release logic
+    URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font}.zip"
+    
+    wget -P /tmp/ "$URL"
+    
+    # Unzip to a specific folder for that font
+    mkdir -p "$FONT_DIR/$font"
+    unzip -o "/tmp/${font}.zip" -d "$FONT_DIR/$font"
+    
+    # Clean up
+    rm "/tmp/${font}.zip"
+done
+
+# Remove extra files that aren't font files (optional)
+find "$FONT_DIR" -name "*.txt" -delete
+find "$FONT_DIR" -name "*.md" -delete
+
+echo "Refreshing font cache..."
+fc-cache -fv
+
+echo "--------------------------------------------------"

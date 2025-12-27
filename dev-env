@@ -54,3 +54,10 @@ copy_file() {
 
 copy_dir env/.config $XDG_CONFIG_HOME
 copy_file env/.zshrc $HOME
+# tmux stuff
+copy_file env/.tmux.conf $HOME
+copy_file env/.tmux-sessionizer $HOME
+copy_file env/scripts/bin/tmux-sessionizer $HOME/.local/bin/
+copy_file env/scripts/bin/tmux-session-switcher $HOME/.local/bin/
+copy_file env/scripts/bin/tmux-kill-session $HOME/.local/bin/
+
