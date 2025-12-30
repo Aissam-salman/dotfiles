@@ -1,5 +1,38 @@
 #!/usr/bin/env bash
 
-sudo pacman -S --noconfirm --needed gnome hyprland
-paru -S  --noconfirm --needed waybar hyprlock hyprpaper hyprshot
+# ========================================
+# GNOME - Environnement de bureau stable
+# ========================================
+# GNOME complet avec toutes ses applications
+sudo pacman -S --noconfirm --needed gnome
+
+# Si tu veux GNOME minimal (sans apps):
+# sudo pacman -S --noconfirm --needed gnome-shell gnome-control-center gnome-terminal nautilus gdm
+
+
+# ========================================
+# HYPRLAND - WM Wayland ultra customisable
+# ========================================
+# Hyprland = tiling window manager moderne pour Wayland
+sudo pacman -S --noconfirm --needed hyprland
+
+# Outils essentiels pour Hyprland
+paru -S --noconfirm --needed \
+    waybar \      # Barre de statut customisable
+    hyprlock \    # Écran de verrouillage
+    hyprpaper \   # Gestionnaire de wallpapers
+    hyprshot      # Screenshots pour Hyprland
+
+# Outils optionnels recommandés pour Hyprland:
+# paru -S --noconfirm --needed \
+#     wofi \              # Lanceur d'applications (alternative: rofi-wayland)
+#     wlogout \           # Menu de logout élégant
+#     swww \              # Wallpaper animé (alternative: hyprpaper)
+#     wl-clipboard \      # Clipboard pour Wayland
+#     grim slurp \        # Screenshots (alternative: hyprshot)
+#     swayidle \          # Gestion d'inactivité
+#     brightnessctl       # Contrôle luminosité
+
+echo "✅ GNOME (stable) + Hyprland (custom) installés"
+echo "💡 Choisis au login: GNOME ou Hyprland"
 

@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-sudo pacman -S --noconfirm --needed curl wget fd fzf exa ripgrep lsd unzip fontconfig zoxide dolphin \
-    dunst mako fnott swaync pipewire wireplumber qt5-wayland qt6-wayland tmux xclip

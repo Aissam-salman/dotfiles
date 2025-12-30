@@ -6,5 +6,28 @@ pushd ~/paru
 makepkg -si
 popd
 
-paru -S --noconfirm --needed gimp tldr fzf rofi-wayland btop bc stylua node npm fd ripgrep bat tmux
-paru -S ttf-font-awesome ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols --noconfirm
+# Applications graphiques
+paru -S --noconfirm --needed gimp dolphin rofi-wayland
+
+# Dev tools et languages
+paru -S --noconfirm --needed node npm stylua
+# language support C and CPP
+paru -S --noconfirm --needed clang llvm lld cmake gdb lldb
+
+# Terminal utils
+paru -S --noconfirm --needed tldr fzf btop bc tmux curl wget \
+fd ripgrep bat eza zoxide unzip xclip
+
+# Wayland/Qt support
+paru -S --noconfirm --needed qt5-wayland qt6-wayland
+
+# Audio (Pipewire)
+paru -S --noconfirm --needed pipewire wireplumber
+
+# Notifications (choisis-en UN seul: mako OU dunst OU swaync)
+paru -S --noconfirm --needed mako
+
+# Fonts
+paru -S --noconfirm --needed fontconfig
+paru -S --noconfirm --needed ttf-font-awesome ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols
+paru -S --noconfirm --needed noto-fonts noto-fonts-cjk noto-fonts-emoji
