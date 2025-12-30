@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+sudo pacman -S --needed base-devel
+git clone https://aur.archlinux.org/paru.git ~/paru
+pushd ~/paru
+makepkg -si
+popd
+
+paru -S --noconfirm --needed gimp tldr fzf rofi-wayland btop bc stylua node npm fd ripgrep bat tmux
+paru -S ttf-font-awesome ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols --noconfirm

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-sudo apt install gnome hyprland
+sudo pacman -S --noconfirm --needed gnome hyprland
+paru -S  --noconfirm --needed waybar hyprlock hyprpaper hyprshot
 

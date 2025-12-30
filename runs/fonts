@@ -1,4 +1,4 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 
 # Define fonts to install
 # You can find more names at https://github.com/ryanoasis/nerd-fonts/releases
@@ -13,17 +13,17 @@ for font in "${FONTS[@]}"; do
     echo "--------------------------------------------------"
     echo "Downloading and installing: $font Nerd Font"
     echo "--------------------------------------------------"
-    
+
     # Download the zip file from GitHub releases
     # Note: Using 'latest' release logic
     URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font}.zip"
-    
+
     wget -P /tmp/ "$URL"
-    
+
     # Unzip to a specific folder for that font
     mkdir -p "$FONT_DIR/$font"
     unzip -o "/tmp/${font}.zip" -d "$FONT_DIR/$font"
-    
+
     # Clean up
     rm "/tmp/${font}.zip"
 done
