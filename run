@@ -4,13 +4,21 @@ script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 filter=""
 dry="0"
+distro="arch"  # Par défaut: arch
 
 while [[ $# > 0 ]]; do
-    if [[ $1 == "--dry" ]]; then
-        dry="1"
-    else
-        filter="$1"
-    fi
+    case "$1" in
+        --dry)
+            dry="1"
+            ;;
+        --distro)
+            shift
+            distro="$1"
+            ;;
+        *)
+            filter="$1"
+            ;;
+    esac
     shift
 done
 
@@ -30,11 +38,21 @@ execute() {
     "$@"
 }
 
-log "$script_dir -- $filter"
+runs_dir="runs_${distro}"
+
+# Vérifier que le dossier existe
+if [[ ! -d "$runs_dir" ]]; then
+    echo "❌ Erreur: Le dossier '$runs_dir' n'existe pas"
+    echo "💡 Distros disponibles: arch, fedora"
+    echo "Usage: ./run [--distro <arch|fedora>] [--dry] [filter]"
+    exit 1
+fi
+
+log "📦 Distro: $distro -- Dossier: $runs_dir -- Filtre: ${filter:-aucun}"
 
 cd "$script_dir" || exit 1
 
-find runs -maxdepth 1 -mindepth 1 -executable -type f | while read -r script; do
+find "$runs_dir" -maxdepth 1 -mindepth 1 -executable -type f | while read -r script; do
     if [[ -n  "$filter" && "$script" != *"$filter"* ]]; then
         log "filtered: $filter -- $script"
         continue

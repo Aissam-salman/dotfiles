@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "Install Obsidian 📝"
+sudo dnf install -y obsidian
+echo "Done installation success Obsidian 📝"

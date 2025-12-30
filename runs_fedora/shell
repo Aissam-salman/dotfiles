@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+echo "Installation de zsh..."
+sudo dnf install -y zsh
+
+echo "Installation de Oh My Zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+echo "Installation de Starship prompt..."
+curl -sS https://starship.rs/install.sh | sh
+
+echo 'eval "$(starship init zsh)"' >> ~/.zshrc
+chsh -s $(which zsh)
+
+echo "✅ Shell setup terminé (Fedora)"

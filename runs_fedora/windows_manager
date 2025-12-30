@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# ========================================
+# GNOME - Environnement de bureau stable
+# ========================================
+# GNOME est déjà installé par défaut sur Fedora Workstation
+# Si besoin de réinstaller:
+sudo dnf groupinstall -y "GNOME Desktop Environment"
+
+# Si tu veux GNOME minimal:
+# sudo dnf install -y gnome-shell gnome-terminal nautilus gdm
+
+
+# ========================================
+# HYPRLAND - WM Wayland ultra customisable
+# ========================================
+# Hyprland via COPR (pas dans repos officiels Fedora)
+echo "Installation de Hyprland via COPR..."
+sudo dnf copr enable -y solopasha/hyprland
+sudo dnf install -y hyprland
+
+# Outils essentiels pour Hyprland
+sudo dnf install -y waybar wl-clipboard
+
+# ⚠️ hyprlock, hyprpaper, hyprshot nécessitent compilation manuelle
+echo "⚠️ Note: hyprlock, hyprpaper, hyprshot doivent être compilés"
+echo "💡 Voir: https://wiki.hyprland.org/Getting-Started/Installation/"
+
+# Outils optionnels recommandés:
+# sudo dnf install -y \
+#     wofi \              # Lanceur d'applications
+#     grim slurp \        # Screenshots
+#     brightnessctl       # Contrôle luminosité
+
+echo "✅ GNOME (stable) + Hyprland (custom) installés (Fedora)"
+echo "💡 Choisis au login: GNOME ou Hyprland"
+
