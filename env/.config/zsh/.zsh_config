@@ -13,7 +13,7 @@ bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
 # Ctrl-f to launch tmux-sessionizer
-function tmux-sessionizer-keybind() { tmux-sessionizer; zle reset-prompt }
+function tmux-sessionizer-keybind() { ~/.local/scripts/tmux-sessionizer; zle reset-prompt }
 zle -N tmux-sessionizer-keybind
 bindkey '^f' tmux-sessionizer-keybind
 
