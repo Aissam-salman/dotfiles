@@ -2,12 +2,12 @@
 
 # Format of the prompt
 format = """
-[┌───────────────>](bold green)
+[ ┌───────────────>](bold blue)
 [│](bold green) $username$hostname$directory$git_branch$git_status
 [└─>](bold green) $character"""
 
 # Right format (optional)
-right_format = "$cmd_duration"
+right_format = "$cmd_duration$c$cpp$typescript$javascript$php"
 
 # Add a line break before the prompt
 add_newline = true
@@ -34,13 +34,13 @@ style = "bold blue"
 [directory]
 truncation_length = 3
 truncate_to_repo = true
-format = "[$path]($style) "
+format = " [$path]($style) "
 style = "bold cyan"
 read_only = " 🔒"
 
 # Git branch module
 [git_branch]
-format = "[on $symbol$branch]($style) "
+format = "[ $symbol$branch]($style) "
 style = "bold purple"
 symbol = " "
 
@@ -67,28 +67,58 @@ style = "bold yellow"
 
 # Programming language modules
 [nodejs]
-format = "[⬢ $version]($style) "
+format = "[ $version]($style) "
 style = "bold green"
 detect_extensions = ["js", "jsx", "ts", "tsx", "mjs", "cjs"]
 detect_files = ["package.json", "package-lock.json", "yarn.lock"]
 
 [python]
-format = "[🐍 $version]($style) "
+format = "[ $version]($style) "
 style = "bold yellow"
 detect_extensions = ["py"]
 detect_files = [".python-version", "Pipfile", "__pycache__", "pyproject.toml", "requirements.txt", "setup.py", "tox.ini"]
 
 [rust]
-format = "[🦀 $version]($style) "
+format = "[ $version]($style) "
 style = "bold orange"
 detect_extensions = ["rs"]
 detect_files = ["Cargo.toml", "Cargo.lock"]
 
 [go]
-format = "[🐹 $version]($style) "
+format = "[󰟓 $version]($style) "
 style = "bold blue"
 detect_extensions = ["go"]
 detect_files = ["go.mod", "go.sum"]
+
+[c]
+format = "[ $version]($style) "
+style = "bold blue"
+detect_extensions = ["c"]
+detect_files = ["CMakeLists.txt"]
+
+[cpp]
+format = "[󰙲 $version]($style) "
+style = "bold purple"
+detect_extensions = ["cpp", "cc", "cxx"]
+detect_files = ["CMakeLists.txt"]
+
+[typescript]
+format = "[ $version]($style) "
+style = "bold blue"
+detect_extensions = ["ts", "tsx"]
+detect_files = ["tsconfig.json", "package.json"]
+
+[javascript]
+format = "[ $version]($style) "
+style = "bold yellow"
+detect_extensions = ["js", "jsx", "mjs", "cjs"]
+detect_files = ["package.json"]
+
+[php]
+format = "[ $version]($style) "
+style = "bold magenta"
+detect_extensions = ["php"]
+detect_files = ["composer.json", "index.php"]
 
 # Line break
 [line_break]

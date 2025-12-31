@@ -6,11 +6,16 @@ echo "================================"
 echo "Étape 2: Installation de Oh My Zsh"
 echo "================================"
 
-RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
+# Check if Oh My Zsh is already installed
 if [ -d "$HOME/.oh-my-zsh" ]; then
-    echo "✅ Oh My Zsh installé avec succès"
+    echo "✅ Oh My Zsh est déjà installé"
 else
-    echo "❌ Erreur: Oh My Zsh n'a pas pu être installé"
-    exit 1
+    ZSH= sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+    if [ -d "$HOME/.oh-my-zsh" ]; then
+        echo "✅ Oh My Zsh installé avec succès"
+    else
+        echo "❌ Erreur: Oh My Zsh n'a pas pu être installé"
+        exit 1
+    fi
 fi

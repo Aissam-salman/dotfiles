@@ -3,9 +3,6 @@
 # ========================================
 # GNOME - Environnement de bureau stable
 # ========================================
-# GNOME est déjà installé par défaut sur Fedora Workstation
-# Si besoin de réinstaller:
-sudo dnf groupinstall -y "GNOME Desktop Environment"
 
 # Si tu veux GNOME minimal:
 # sudo dnf install -y gnome-shell gnome-terminal nautilus gdm

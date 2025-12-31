@@ -6,10 +6,7 @@ echo "================================"
 echo "Étape 5: Définir zsh par défaut"
 echo "================================"
 
-chsh -s $(which zsh)
+sudo chsh -s $(which zsh) $USER
 
-if [ "$SHELL" = "$(which zsh)" ] || [ "$SHELL" = "/bin/zsh" ]; then
-    echo "✅ zsh est maintenant le shell par défaut"
-else
-    echo "⚠️  Avertissement: Vous devrez peut-être vous reconnecter pour que zsh soit activé"
-fi
+echo "✅ zsh est maintenant défini comme shell par défaut"
+echo "⚠️  Vous devrez vous reconnecter pour que le changement soit effectif"

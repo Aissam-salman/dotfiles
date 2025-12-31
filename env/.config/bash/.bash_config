@@ -39,3 +39,4 @@ export SUDO_EDITOR="$EDITOR"
 
 # FZF Configuration
 export FZF_NAV_PATHS="${FZF_NAV_PATHS:-. ~/Work ~/Documents ~/.config ~/dotfiles}"
+

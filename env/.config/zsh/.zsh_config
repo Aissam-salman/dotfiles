@@ -52,7 +52,7 @@ export FZF_NAV_PATHS="${FZF_NAV_PATHS:-. ~/Work ~/Documents ~/.config ~/dotfiles
 # -------------------------
 # OH-MY-ZSH Configuration
 # -------------------------
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
 zstyle ':omz:update' mode auto      # update automatically without asking
 
 # Which plugins would you like to load?
@@ -65,8 +65,6 @@ plugins=(git)
 # -------------------------
 # INITIALIZE TOOLS
 # -------------------------
-eval "$(starship init zsh)"
+
 eval "$(fzf --zsh)"
 
-# Source oh-my-zsh
-source $ZSH/oh-my-zsh.sh

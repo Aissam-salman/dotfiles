@@ -18,5 +18,7 @@
 
 # Charger les fonctions
 [ -f ~/.config/zsh/.zsh_functions ] && source ~/.config/zsh/.zsh_functions
+# Load Oh My Zsh if installed
+[ -d "$HOME/.oh-my-zsh" ] && source "$HOME/.oh-my-zsh/oh-my-zsh.sh"
 
 eval "$(starship init zsh)"

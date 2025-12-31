@@ -23,3 +23,5 @@
 
 # Charger les fonctions
 [ -f ~/.config/bash/.bash_functions ] && source ~/.config/bash/.bash_functions
+
+eval "$(starship init bash)"

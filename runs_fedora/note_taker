@@ -2,10 +2,8 @@
 
 echo "Install Obsidian 📝"
 # Obsidian via COPR (unofficial but reliable)
-sudo dnf copr enable -y lukelbd/obsidian
-sudo dnf install -y obsidian
 
 # Alternative: Use Flatpak if COPR doesn't work
-# flatpak install flathub md.obsidian.Obsidian
+flatpak install -y flathub md.obsidian.Obsidian > /dev/null 2>&1
 
 echo "Done installation success Obsidian 📝"
