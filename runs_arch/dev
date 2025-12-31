@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git ~/paru
-pushd ~/paru
-makepkg -si
-popd
+# sudo pacman -S --needed base-devel
+# git clone https://aur.archlinux.org/paru.git ~/paru
+# pushd ~/paru
+# makepkg -si
+# popd
 
 # Applications graphiques
-paru -S --noconfirm --needed gimp dolphin rofi-wayland
 
 # Dev tools et languages
 paru -S --noconfirm --needed node npm stylua
@@ -24,8 +23,8 @@ paru -S --noconfirm --needed qt5-wayland qt6-wayland
 # Audio (Pipewire)
 paru -S --noconfirm --needed pipewire wireplumber
 
-# Notifications (choisis-en UN seul: mako OU dunst OU swaync)
-paru -S --noconfirm --needed mako
+ # Notifications (choisis-en UN seul: mako OU dunst OU swaync)
+# paru -S --noconfirm --needed mako
 
 # Fonts
 paru -S --noconfirm --needed fontconfig

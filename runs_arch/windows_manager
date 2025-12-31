@@ -4,7 +4,7 @@
 # GNOME - Environnement de bureau stable
 # ========================================
 # GNOME complet avec toutes ses applications
-sudo pacman -S --noconfirm --needed gnome
+# sudo pacman -S --noconfirm --needed gnome
 
 # Si tu veux GNOME minimal (sans apps):
 # sudo pacman -S --noconfirm --needed gnome-shell gnome-control-center gnome-terminal nautilus gdm
@@ -14,7 +14,7 @@ sudo pacman -S --noconfirm --needed gnome
 # HYPRLAND - WM Wayland ultra customisable
 # ========================================
 # Hyprland = tiling window manager moderne pour Wayland
-sudo pacman -S --noconfirm --needed hyprland
+# sudo pacman -S --noconfirm --needed hyprland
 
 # Outils essentiels pour Hyprland
 paru -S --noconfirm --needed \
