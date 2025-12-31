@@ -1,0 +1,41 @@
+# -------------------------
+# HISTORY CONFIGURATION
+# -------------------------
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTSIZE=32768
+HISTFILESIZE="${HISTSIZE}"
+
+# -------------------------
+# BASH OPTIONS
+# -------------------------
+# Autocompletion
+if [[ ! -v BASH_COMPLETION_VERSINFO && -f /usr/share/bash-completion/bash_completion ]]; then
+  source /usr/share/bash-completion/bash_completion
+fi
+
+# Ensure command hashing is off for mise
+set +h
+
+# -------------------------
+# KEYBINDINGS
+# -------------------------
+# Ctrl-f pour lancer tmux-sessionizer
+bind -x '"\C-f":"tmux-sessionizer"'
+
+# Alt-f pour navigation intelligente avec fzf
+bind -x '"\ef":"smart_fzf_nav"'
+
+# Alt-d pour navigation dans les dossiers uniquement
+bind -x '"\ed":"fzf_dir_nav"'
+
+# -------------------------
+# ENVIRONMENT VARIABLES
+# -------------------------
+export PATH="$HOME/.local/bin:$PATH"
+
+# Editor used by CLI
+export SUDO_EDITOR="$EDITOR"
+
+# FZF Configuration
+export FZF_NAV_PATHS="${FZF_NAV_PATHS:-. ~/Work ~/Documents ~/.config ~/dotfiles}"

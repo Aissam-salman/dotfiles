@@ -1,0 +1,66 @@
+# -------------------------
+# PATH
+# -------------------------
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export ZSH="$HOME/.oh-my-zsh"
+
+# -------------------------
+# KEYBINDINGS
+# -------------------------
+bindkey -e
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+bindkey '^[w' kill-region
+
+# Ctrl-f pour lancer tmux-sessionizer
+bind -x '"\C-f":"tmux-sessionizer"'
+
+# Alt-f pour navigation intelligente avec fzf
+bind -x '"\ef":"smart_fzf_nav"'
+
+# Alt-d pour navigation dans les dossiers uniquement
+bind -x '"\ed":"fzf_dir_nav"'
+
+# -------------------------
+# HISTORY
+# -------------------------
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
+
+# -------------------------
+# EDITORS & TOOLS
+# -------------------------
+export EDITOR=nvim
+export VISUAL=code
+export GIT_EDITOR=nvim
+
+# -------------------------
+# FZF Configuration
+# -------------------------
+# Personnalisez FZF_NAV_PATHS pour ajouter vos propres chemins
+export FZF_NAV_PATHS="${FZF_NAV_PATHS:-. ~/Work ~/Documents ~/.config ~/dotfiles}"
+
+# -------------------------
+# OH-MY-ZSH Configuration
+# -------------------------
+ZSH_THEME="robbyrussell"
+zstyle ':omz:update' mode auto      # update automatically without asking
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
+
+# -------------------------
+# INITIALIZE TOOLS
+# -------------------------
+eval "$(starship init zsh)"
+eval "$(fzf --zsh)"
+
+# Source oh-my-zsh
+source $ZSH/oh-my-zsh.sh
