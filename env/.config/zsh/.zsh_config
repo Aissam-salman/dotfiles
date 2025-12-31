@@ -5,21 +5,27 @@ export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 
 # -------------------------
-# KEYBINDINGS
+# KEYBINDINGS (ZSH)
 # -------------------------
 bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
-# Ctrl-f pour lancer tmux-sessionizer
-bind -x '"\C-f":"tmux-sessionizer"'
+# Ctrl-f to launch tmux-sessionizer
+function tmux-sessionizer-keybind() { tmux-sessionizer; zle reset-prompt }
+zle -N tmux-sessionizer-keybind
+bindkey '^f' tmux-sessionizer-keybind
 
-# Alt-f pour navigation intelligente avec fzf
-bind -x '"\ef":"smart_fzf_nav"'
+# Alt-f for intelligent navigation with fzf
+function smart_fzf_nav_keybind() { smart_fzf_nav; zle reset-prompt }
+zle -N smart_fzf_nav_keybind
+bindkey '^[f' smart_fzf_nav_keybind
 
-# Alt-d pour navigation dans les dossiers uniquement
-bind -x '"\ed":"fzf_dir_nav"'
+# Alt-d for directory navigation only
+function fzf_dir_nav_keybind() { fzf_dir_nav; zle reset-prompt }
+zle -N fzf_dir_nav_keybind
+bindkey '^[d' fzf_dir_nav_keybind
 
 # -------------------------
 # HISTORY

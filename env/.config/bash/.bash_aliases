@@ -71,7 +71,6 @@ alias paco="/home/salman/francinette/tester.sh"
 # LISTING ALIASES (custom)
 # -------------------------
 alias l="lsd"
-alias la="eza -a --color=always --group-directories-first"
 alias l.="ls -A | egrep '^\.'"
 
 # -------------------------

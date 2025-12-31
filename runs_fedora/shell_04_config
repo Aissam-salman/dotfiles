@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e  # Exit on error
+
+echo "================================"
+echo "Étape 4: Configuration de Starship"
+echo "================================"
+
+# Create .config directory if it doesn't exist
+mkdir -p ~/.config
+
+# Copy starship config from dotfiles
+if [ -f "starship.toml" ]; then
+    cp starship.toml ~/.config/
+    echo "✅ Fichier starship.toml copié"
+else
+    echo "⚠️  Avertissement: starship.toml non trouvé"
+fi
+
+# Add starship init to zshrc if not already present
+if ! grep -q "starship init zsh" ~/.zshrc; then
+    echo 'eval "$(starship init zsh)"' >> ~/.zshrc
+    echo "✅ Starship ajouté à ~/.zshrc"
+else
+    echo "✅ Starship déjà configuré dans ~/.zshrc"
+fi

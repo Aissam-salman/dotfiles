@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e  # Exit on error
+
+echo "================================"
+echo "Étape 3: Installation de Starship"
+echo "================================"
+
+curl -sS https://starship.rs/install.sh | sh -s -- -y
+
+if command -v starship &> /dev/null; then
+    echo "✅ Starship installé avec succès"
+else
+    echo "❌ Erreur: Starship n'a pas pu être installé"
+    exit 1
+fi

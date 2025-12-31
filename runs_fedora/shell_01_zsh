@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e  # Exit on error
+
+echo "================================"
+echo "Étape 1: Installation de zsh"
+echo "================================"
+
+sudo dnf install -y zsh
+
+if command -v zsh &> /dev/null; then
+    echo "✅ zsh installé avec succès"
+else
+    echo "❌ Erreur: zsh n'a pas pu être installé"
+    exit 1
+fi

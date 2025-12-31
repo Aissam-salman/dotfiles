@@ -51,8 +51,8 @@ alias rm="rm -i"
 # LISTING ALIASES
 # -------------------------
 alias l="lsd"
-alias ls="exa -al --color=always --group-directories-first"
-alias la="exa -a --color=always --group-directories-first"
+alias ls="eza -al --color=always --group-directories-first"
+alias la="eza -a --color=always --group-directories-first"
 alias l.="ls -A | egrep '^\.'"
 alias listdir="ls -d */ > list"
 

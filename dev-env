@@ -2,10 +2,12 @@
 
 # Copy and paste all config files to my system
 
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 dry="0"
 
-while [[ $# > 0 ]]; do
+while [[ $# -gt 0 ]]; do
     if [[ $1 == "--dry" ]]; then
         dry="1"
     fi
@@ -23,7 +25,7 @@ log() {
 execute() {
 	if [[ $dry == "1" ]]; then
 		echo "[DRY_RUN]: $*"
-	else 
+	else
 		echo "[EXEC]: $*"
 		"$@"
 	fi
@@ -34,12 +36,13 @@ log "--------- DEV-ENV ---------"
 copy_dir() {
     from=$1
     to=$2
+    execute mkdir -p "$to"
 
-    pushd $from > /dev/null
+    pushd "$from" > /dev/null
     dirs=$(find . -mindepth 1 -maxdepth 1 -type d)
     for dir in $dirs; do
-        execute sudo rm -rf $to/$dir
-        execute sudo cp -r $dir $to/$dir
+        execute rm -rf "$to/$dir"
+        execute cp -a "$dir" "$to/$dir"
     done
     popd > /dev/null
 }
@@ -47,20 +50,20 @@ copy_dir() {
 copy_file() {
     from=$1
     to=$2
+
+    execute mkdir -p "$to"
     name=$(basename $from)
-    execute sudo rm $to/$name
-    execute sudo cp $from $to/$name
+    execute rm -f "$to/$name"
+    execute cp -a "$from" "$to/$name"
 }
 
 
 copy_dir env/.config $XDG_CONFIG_HOME
 copy_file env/.zshrc $HOME
 copy_file env/.bashrc $HOME
-
+copy_file env/starship.toml $XDG_CONFIG_HOME
 # tmux stuff
 copy_file env/.tmux.conf $HOME
 copy_file env/.tmux-sessionizer $HOME
 # copy_file env/.ready-tmux $HOME
-
 copy_dir .local $HOME/.local
-

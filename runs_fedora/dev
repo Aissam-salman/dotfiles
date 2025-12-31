@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # Installer les outils de développement de base
-sudo dnf groupinstall -y "Development Tools"
 sudo dnf install -y rpm-build
 
 # Applications graphiques
@@ -14,7 +13,7 @@ sudo dnf install -y clang llvm lld cmake gdb lldb
 
 # Terminal utils
 sudo dnf install -y tldr fzf btop bc tmux curl wget \
-fd-find ripgrep bat eza zoxide unzip xclip
+fd-find ripgrep bat  zoxide unzip xclip
 
 # Wayland/Qt support
 sudo dnf install -y qt5-qtwayland qt6-qtwayland
@@ -32,6 +31,7 @@ google-noto-emoji-fonts google-noto-sans-fonts google-noto-serif-fonts
 # stylua via cargo (pas dans les repos Fedora)
 if ! command -v stylua &> /dev/null; then
     echo "📦 stylua: installer via cargo install stylua (nécessite rust)"
+    cargo install stylua
 fi
 
 echo "✅ Installation dev tools terminée (Fedora)"

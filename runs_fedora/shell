@@ -1,15 +1,37 @@
 #!/usr/bin/env bash
 
-echo "Installation de zsh..."
-sudo dnf install -y zsh
+echo "========================================"
+echo "Installation complète du Shell (Fedora)"
+echo "========================================"
+echo ""
 
-echo "Installation de Oh My Zsh..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "Installation de Starship prompt..."
-curl -sS https://starship.rs/install.sh | sh
+# Array of scripts to run
+scripts=(
+    "$SCRIPT_DIR/shell_01_zsh"
+    "$SCRIPT_DIR/shell_02_oh_my_zsh"
+    "$SCRIPT_DIR/shell_03_starship"
+    "$SCRIPT_DIR/shell_04_config"
+    "$SCRIPT_DIR/shell_05_default"
+)
 
-echo 'eval "$(starship init zsh)"' >> ~/.zshrc
-chsh -s $(which zsh)
+# Run each script
+for script in "${scripts[@]}"; do
+    echo ""
+    if [ -f "$script" ]; then
+        bash "$script"
+        if [ $? -ne 0 ]; then
+            echo "❌ Erreur lors de l'exécution de $script"
+            exit 1
+        fi
+    else
+        echo "❌ Erreur: $script non trouvé"
+        exit 1
+    fi
+done
 
-echo "✅ Shell setup terminé (Fedora)"
+echo ""
+echo "========================================"
+echo "✅ Installation shell terminée (Fedora)"
+echo "========================================"

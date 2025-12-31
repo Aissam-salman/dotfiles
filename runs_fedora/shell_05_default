@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e  # Exit on error
+
+echo "================================"
+echo "Étape 5: Définir zsh par défaut"
+echo "================================"
+
+chsh -s $(which zsh)
+
+if [ "$SHELL" = "$(which zsh)" ] || [ "$SHELL" = "/bin/zsh" ]; then
+    echo "✅ zsh est maintenant le shell par défaut"
+else
+    echo "⚠️  Avertissement: Vous devrez peut-être vous reconnecter pour que zsh soit activé"
+fi

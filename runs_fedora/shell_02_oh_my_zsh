@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e  # Exit on error
+
+echo "================================"
+echo "Étape 2: Installation de Oh My Zsh"
+echo "================================"
+
+RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+if [ -d "$HOME/.oh-my-zsh" ]; then
+    echo "✅ Oh My Zsh installé avec succès"
+else
+    echo "❌ Erreur: Oh My Zsh n'a pas pu être installé"
+    exit 1
+fi

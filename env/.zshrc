@@ -19,3 +19,4 @@
 # Charger les fonctions
 [ -f ~/.config/zsh/.zsh_functions ] && source ~/.config/zsh/.zsh_functions
 
+eval "$(starship init zsh)"
