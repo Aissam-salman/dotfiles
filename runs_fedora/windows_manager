@@ -23,9 +23,9 @@ sudo dnf install -y waybar wl-clipboard
 echo "⚠️ Note: hyprlock, hyprpaper, hyprshot doivent être compilés"
 echo "💡 Voir: https://wiki.hyprland.org/Getting-Started/Installation/"
 
-# Outils optionnels recommandés:
+# /usr/share//applications/rofi-theme-selector.desktopOutils optionnels recommandés:
 # sudo dnf install -y \
-#     wofi \              # Lanceur d'applications
+#/usr/share//applications/rofi-theme-selector.desktop     wofi \              # Lanceur d'applications
 #     grim slurp \        # Screenshots
 #     brightnessctl       # Contrôle luminosité
 
