@@ -3,9 +3,6 @@
 # Installer les outils de développement de base
 sudo dnf install -y rpm-build
 
-# Applications graphiques
-sudo dnf install -y gimp dolphin rofi
-
 # Dev tools et languages
 sudo dnf install -y nodejs npm
 # language support C and CPP
@@ -13,7 +10,7 @@ sudo dnf install -y clang llvm lld cmake gdb lldb
 
 # Terminal utils
 sudo dnf install -y tldr fzf btop bc tmux curl wget \
-fd-find ripgrep bat  zoxide unzip xclip
+fd-find ripgrep bat zoxide unzip xclip
 
 # Wayland/Qt support
 sudo dnf install -y qt5-qtwayland qt6-qtwayland
