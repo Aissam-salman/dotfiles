@@ -2,8 +2,7 @@
 
 # Format of the prompt
 format = """
-[ ┌───────────────>](bold blue)
-[│](bold green) $username$hostname$directory$git_branch$git_status
+[](bold green) $directory$git_branch$git_status
 [└─>](bold green) $character"""
 
 # Right format (optional)
@@ -88,7 +87,7 @@ detect_files = ["Cargo.toml", "Cargo.lock"]
 format = "[󰟓 $version]($style) "
 style = "bold blue"
 detect_extensions = ["go"]
-detect_files = ["go.mod", "go.sum"]
+detect_folders = ["vendor"]
 
 [c]
 format = "[ $version]($style) "

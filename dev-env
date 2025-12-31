@@ -60,7 +60,7 @@ copy_file() {
 copy_dir env/.config $XDG_CONFIG_HOME
 copy_file env/.zshrc $HOME
 copy_file env/.bashrc $HOME
-copy_file env/.config/startship.toml $XDG_CONFIG_HOME
+copy_file env/.config/starship.toml $XDG_CONFIG_HOME
 # tmux stuff
 copy_file env/.tmux.conf $HOME
 copy_file env/.tmux-sessionizer $HOME
