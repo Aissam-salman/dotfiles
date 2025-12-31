@@ -1,124 +1,13 @@
-# Starship Configuration
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
 
-# Format of the prompt
-format = """
-[](bold green) $directory$git_branch$git_status
-[└─>](bold green) $character"""
-
-# Right format (optional)
-right_format = "$cmd_duration$c$cpp$typescript$javascript$php"
-
-# Add a line break before the prompt
+# Inserts a blank line between shell prompts
 add_newline = true
 
-# Character module - shows prompt symbol
-[character]
-success_symbol = "[➜](bold green)"
-error_symbol = "[✗](bold red)"
+# Replace the '❯' symbol in the prompt with '➜'
+[character] # The name of the module we are configuring is 'character'
+success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
 
-# Username module
-[username]
-format = "[$user]($style) "
-style_user = "bold blue"
-style_root = "bold red"
-show_always = false
-
-# Hostname module
-[hostname]
-ssh_only = false
-format = "[@$hostname]($style) "
-style = "bold blue"
-
-# Directory module
-[directory]
-truncation_length = 3
-truncate_to_repo = true
-format = " [$path]($style) "
-style = "bold cyan"
-read_only = " 🔒"
-
-# Git branch module
-[git_branch]
-format = "[ $symbol$branch]($style) "
-style = "bold purple"
-symbol = " "
-
-# Git status module
-[git_status]
-format = "([\\[$all_status$ahead_behind\\]]($style) )"
-style = "bold red"
-conflicted = "🏳"
-ahead = "⇡${count}"
-behind = "⇣${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-untracked = "?${count}"
-stashed = "$${count}"
-modified = "!${count}"
-staged = "+${count}"
-renamed = "»${count}"
-deleted = "✘${count}"
-
-# Command duration
-[cmd_duration]
-min_time = 500
-format = "took [$duration]($style) "
-style = "bold yellow"
-
-# Programming language modules
-[nodejs]
-format = "[ $version]($style) "
-style = "bold green"
-detect_extensions = ["js", "jsx", "ts", "tsx", "mjs", "cjs"]
-detect_files = ["package.json", "package-lock.json", "yarn.lock"]
-
-[python]
-format = "[ $version]($style) "
-style = "bold yellow"
-detect_extensions = ["py"]
-detect_files = [".python-version", "Pipfile", "__pycache__", "pyproject.toml", "requirements.txt", "setup.py", "tox.ini"]
-
-[rust]
-format = "[ $version]($style) "
-style = "bold orange"
-detect_extensions = ["rs"]
-detect_files = ["Cargo.toml", "Cargo.lock"]
-
-[go]
-format = "[󰟓 $version]($style) "
-style = "bold blue"
-detect_extensions = ["go"]
-detect_folders = ["vendor"]
-
-[c]
-format = "[ $version]($style) "
-style = "bold blue"
-detect_extensions = ["c"]
-detect_files = ["CMakeLists.txt"]
-
-[cpp]
-format = "[󰙲 $version]($style) "
-style = "bold purple"
-detect_extensions = ["cpp", "cc", "cxx"]
-detect_files = ["CMakeLists.txt"]
-
-[typescript]
-format = "[ $version]($style) "
-style = "bold blue"
-detect_extensions = ["ts", "tsx"]
-detect_files = ["tsconfig.json", "package.json"]
-
-[javascript]
-format = "[ $version]($style) "
-style = "bold yellow"
-detect_extensions = ["js", "jsx", "mjs", "cjs"]
-detect_files = ["package.json"]
-
-[php]
-format = "[ $version]($style) "
-style = "bold magenta"
-detect_extensions = ["php"]
-detect_files = ["composer.json", "index.php"]
-
-# Line break
-[line_break]
+# Disable the package module, hiding it from the prompt completely
+[package]
 disabled = false
