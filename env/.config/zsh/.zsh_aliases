@@ -93,8 +93,3 @@ alias sr="reboot"
 # TMUX ALIASES
 # -------------------------
 alias sourcetmux="tmux source ~/.tmux.conf"
-
-# -------------------------
-# DOTFILES MANAGEMENT
-# -------------------------
-alias ud="update_dotfiles"
