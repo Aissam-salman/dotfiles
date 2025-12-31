@@ -21,11 +21,12 @@ log() {
 }
 
 execute() {
-    log "execute $@"
-    if [[ $dry == "1" ]]; then
-        echo "[DRY_RUN]: $@"
-    fi
-    "$@"
+	if [[ $dry == "1" ]]; then
+		echo "[DRY_RUN]: $*"
+	else 
+		echo "[EXEC]: $*"
+		"$@"
+	fi
 }
 
 log "--------- DEV-ENV ---------"
