@@ -17,21 +17,15 @@
 # sudo pacman -S --noconfirm --needed hyprland
 
 # Outils essentiels pour Hyprland
-paru -S --noconfirm --needed \
-    waybar \      # Barre de statut customisable
-    hyprlock \    # Écran de verrouillage
-    hyprpaper \   # Gestionnaire de wallpapers
-    hyprshot      # Screenshots pour Hyprland
+paru -S --noconfirm --needed waybar hyprlauncher hyprlock hyprpaper hyprshot
+		
 
 # Outils optionnels recommandés pour Hyprland:
-# paru -S --noconfirm --needed \
-#     wofi \              # Lanceur d'applications (alternative: rofi-wayland)
-#     wlogout \           # Menu de logout élégant
-#     swww \              # Wallpaper animé (alternative: hyprpaper)
-#     wl-clipboard \      # Clipboard pour Wayland
-#     grim slurp \        # Screenshots (alternative: hyprshot)
-#     swayidle \          # Gestion d'inactivité
-#     brightnessctl       # Contrôle luminosité
+paru -S --noconfirm --needed wlogout wl-clipboard impala
+    # swww \          
+    # grim slurp \   
+    # swayidle \    
+    # brightnessctl
 
 echo "✅ GNOME (stable) + Hyprland (custom) installés"
 echo "💡 Choisis au login: GNOME ou Hyprland"

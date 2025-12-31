@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 # Copy and paste all config files to my system
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -66,3 +67,5 @@ copy_file env/.tmux.conf $HOME
 copy_file env/.tmux-sessionizer $HOME
 # copy_file env/.ready-tmux $HOME
 copy_dir .local $HOME/.local
+
+hyprctl reload
