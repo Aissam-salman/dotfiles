@@ -21,7 +21,7 @@ paru -S --noconfirm --needed waybar hyprlauncher hyprlock hyprpaper hyprshot
 		
 
 # Outils optionnels recommandés pour Hyprland:
-paru -S --noconfirm --needed wlogout wl-clipboard impala
+paru -S --noconfirm --needed wlogout wl-clipboard impala pavucontrol pika-backup swaync
     # swww \          
     # grim slurp \   
     # swayidle \    
