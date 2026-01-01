@@ -10,6 +10,8 @@
 #   ~/.config/zsh/.zsh_functions - Toutes les fonctions personnalisées
 # ============================================
 
+[ -d "$HOME/.oh-my-zsh" ] && source "$HOME/.oh-my-zsh/oh-my-zsh.sh"
+
 # Charger la configuration de base
 [ -f ~/.config/zsh/.zsh_config ] && source ~/.config/zsh/.zsh_config
 
@@ -19,6 +21,5 @@
 # Charger les fonctions
 [ -f ~/.config/zsh/.zsh_functions ] && source ~/.config/zsh/.zsh_functions
 # Load Oh My Zsh if installed
-[ -d "$HOME/.oh-my-zsh" ] && source "$HOME/.oh-my-zsh/oh-my-zsh.sh"
 
 eval "$(starship init zsh)"

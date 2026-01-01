@@ -1,4 +1,16 @@
 # -------------------------
+# ENVIRONMENT VARIABLES
+# -------------------------
+export PATH="$HOME/.local/bin:$PATH"
+
+# Editor used by CLI
+export SUDO_EDITOR="$EDITOR"
+
+# FZF Configuration
+export FZF_NAV_PATHS="${FZF_NAV_PATHS:-. ~/Work ~/Documents ~/.config ~/dotfiles}"
+
+# -------------------------
+#
 # HISTORY CONFIGURATION
 # -------------------------
 shopt -s histappend
@@ -29,14 +41,4 @@ bind -x '"\ef":"smart_fzf_nav"'
 # Alt-d pour navigation dans les dossiers uniquement
 bind -x '"\ed":"fzf_dir_nav"'
 
-# -------------------------
-# ENVIRONMENT VARIABLES
-# -------------------------
-export PATH="$HOME/.local/bin:$PATH"
-
-# Editor used by CLI
-export SUDO_EDITOR="$EDITOR"
-
-# FZF Configuration
-export FZF_NAV_PATHS="${FZF_NAV_PATHS:-. ~/Work ~/Documents ~/.config ~/dotfiles}"
 
