@@ -17,15 +17,11 @@
 # sudo pacman -S --noconfirm --needed hyprland
 
 # Outils essentiels pour Hyprland
-paru -S --noconfirm --needed waybar hyprlauncher hyprlock hyprpaper hyprshot
-		
+paru -S --noconfirm --needed waybar hyprlauncher hyprlock hyprshot
+
 
 # Outils optionnels recommandés pour Hyprland:
-paru -S --noconfirm --needed wlogout wl-clipboard impala pavucontrol pika-backup swaync waypaper
-    # swww \          
-    # grim slurp \   
-    # swayidle \    
-    # brightnessctl
+paru -S --noconfirm --needed wlogout wl-clipboard impala pavucontrol pika-backup swaync waypaper swww
 
 echo "✅ GNOME (stable) + Hyprland (custom) installés"
 echo "💡 Choisis au login: GNOME ou Hyprland"
