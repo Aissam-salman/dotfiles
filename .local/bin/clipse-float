@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Launch clipse in a dedicated kitty instance with a unique class/title so Hyprland can float it
+exec setsid kitty \
+  --class clipse-float \
+  --title clipse \
+  -e clipse

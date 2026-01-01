@@ -35,7 +35,7 @@
         "custom/power"
     ],
     // Modules configuration
-    "hyprland/workspaces": { 
+    "hyprland/workspaces": {
 	"disable-scroll": true,
         "all-outputs": true,
         "warp-on-scroll": false,
@@ -124,7 +124,7 @@
     "bluetooth": {
 	    "format": "󰂲",
 	    "format-on": "{icon}",
-	    "format-off": "{icon}", 
+	    "format-off": "{icon}",
 	    "format-connected":"{icon}",
 	    "format-icons":{
 		    "on":"󰂯",
@@ -154,7 +154,8 @@
         "on-click": "pavucontrol"
     },
     "custom/power": {
-        "format" : "⏻ ",
-	"justify": "center"
+      "format": "⏻ ",
+      "justify": "center",
+      "on-click": "~/.local/bin/power-menu"
     }
 }

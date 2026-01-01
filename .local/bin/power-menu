@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Power Menu using wlogout
+# Options: Lock, Sleep, Reboot, Shutdown, Logout
+
+set -e
+
+layout="${HOME}/.config/wlogout/layout"
+style="${HOME}/.config/wlogout/style.css"
+
+if ! command -v wlogout >/dev/null 2>&1; then
+  notify-send "wlogout manquant" "Installez wlogout pour utiliser le power menu" || true
+  exit 1
+fi
+
+exec wlogout --layout "${layout}" --css "${style}"

@@ -14,17 +14,29 @@ bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
 # Ctrl-f to launch tmux-sessionizer
-function tmux-sessionizer-keybind() { ~/.local/scripts/tmux-sessionizer; zle reset-prompt }
+function tmux-sessionizer-keybind() {
+	zle -I                       # leave ZLE clean before attaching tmux
+	~/.local/scripts/tmux-sessionizer
+	zle reset-prompt
+}
 zle -N tmux-sessionizer-keybind
 bindkey '^f' tmux-sessionizer-keybind
 
 # Alt-f for intelligent navigation with fzf
-function smart_fzf_nav_keybind() { smart_fzf_nav; zle reset-prompt }
+function smart_fzf_nav_keybind() {
+	zle -I
+	smart_fzf_nav
+	zle reset-prompt
+}
 zle -N smart_fzf_nav_keybind
 bindkey '^[f' smart_fzf_nav_keybind
 
 # Alt-d for directory navigation only
-function fzf_dir_nav_keybind() { fzf_dir_nav; zle reset-prompt }
+function fzf_dir_nav_keybind() {
+	zle -I
+	fzf_dir_nav
+	zle reset-prompt
+}
 zle -N fzf_dir_nav_keybind
 bindkey '^[d' fzf_dir_nav_keybind
 
