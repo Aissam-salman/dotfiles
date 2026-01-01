@@ -1,5 +1,0 @@
-# ~/.tmux-sessionizer
-#!/usr/bin/env bash
-
-# Configuration par défaut pour tous les projets
-tmux send-keys "nvim ." C-m
