@@ -17,7 +17,7 @@
 # sudo pacman -S --noconfirm --needed hyprland
 
 # Outils essentiels pour Hyprland
-paru -S --noconfirm --needed waybar hyprlauncher hyprlock hyprshot
+paru -S --noconfirm --needed waybar hyprlock hyprshot wofi
 
 
 # Outils optionnels recommandés pour Hyprland:
