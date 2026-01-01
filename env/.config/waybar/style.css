@@ -21,12 +21,16 @@ window#waybar {
   color: #1e1e2e;
 }
 
+
+#pulseaudio,
+#bluetooth,
 #clock,
 #battery,
 #network,
 #cpu,
-#memory {
+#memory, #custom-power {
   padding: 0 8px;
   background-color: rgba(49, 50, 68, 0.45);
+  font-size: 15px;
 }
 

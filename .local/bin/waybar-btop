@@ -2,6 +2,4 @@
 exec setsid kitty \
   --class btop-float \
   --title btop \
-  --override initial_window_width=120c \
-  --override initial_window_height=34c \
-  btop
+  -e btop
