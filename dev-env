@@ -67,5 +67,6 @@ copy_file env/.tmux.conf $HOME
 copy_file env/.tmux-sessionizer $HOME
 # copy_file env/.ready-tmux $HOME
 copy_dir .local $HOME/.local
+copy_dir env/wallpapers $HOME/Pictures
 
 hyprctl reload
