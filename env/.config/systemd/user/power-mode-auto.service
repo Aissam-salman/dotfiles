@@ -1,0 +1,12 @@
+[Unit]
+Description=Automatic Power Mode Manager
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/scripts/power-mode-auto
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

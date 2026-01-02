@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# Script de gestion des modes d'alimentation
+# Utilise power-profiles-daemon (systemd) pour gérer les profils
+
+set -e
+
+MODE="$1"
+VALID_MODES=("performance" "balanced" "power-saver")
+
+# Fonction pour afficher l'utilisation
+show_usage() {
+    echo "Usage: power-mode [performance|balanced|power-saver|current]"
+    echo ""
+    echo "Modes disponibles:"
+    echo "  performance  - Performance maximale (AC recommandé)"
+    echo "  balanced     - Mode équilibré (normal)"
+    echo "  power-saver  - Économie d'énergie (batterie faible)"
+    echo "  current      - Affiche le mode actuel"
+    exit 1
+}
+
+# Vérifier si power-profiles-daemon est installé
+check_power_profiles() {
+    if ! command -v powerprofilesctl &>/dev/null; then
+        notify-send "⚠️ power-profiles-daemon manquant" \
+            "Installez: sudo pacman -S power-profiles-daemon" \
+            --urgency=critical
+        echo "Erreur: power-profiles-daemon n'est pas installé"
+        echo "Installez-le avec: sudo pacman -S power-profiles-daemon"
+        exit 1
+    fi
+}
+
+# Obtenir le profil actuel
+get_current() {
+    powerprofilesctl get
+}
+
+# Définir un profil
+set_profile() {
+    local profile="$1"
+    powerprofilesctl set "$profile"
+
+    # Notification avec icône appropriée
+    case "$profile" in
+        performance)
+            notify-send "⚡ Mode Performance" \
+                "Performance maximale activée" \
+                --icon=battery-full-charging
+            ;;
+        balanced)
+            notify-send "⚖️ Mode Équilibré" \
+                "Mode normal activé" \
+                --icon=battery-good
+            ;;
+        power-saver)
+            notify-send "🔋 Mode Économie" \
+                "Économie d'énergie activée" \
+                --icon=battery-low
+            ;;
+    esac
+}
+
+# Main
+check_power_profiles
+
+if [[ -z "$MODE" ]]; then
+    show_usage
+fi
+
+case "$MODE" in
+    performance|balanced|power-saver)
+        set_profile "$MODE"
+        ;;
+    current)
+        current=$(get_current)
+        echo "Mode actuel: $current"
+        ;;
+    *)
+        echo "Mode invalide: $MODE"
+        show_usage
+        ;;
+esac

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Menu wofi pour changer de mode d'alimentation
+
+set -e
+
+# Vérifier que wofi est installé
+if ! command -v wofi &>/dev/null; then
+    notify-send "⚠️ wofi manquant" "Installez wofi pour utiliser ce menu"
+    exit 1
+fi
+
+# Obtenir le mode actuel
+CURRENT_MODE=$(powerprofilesctl get 2>/dev/null || echo "unknown")
+
+# Options du menu avec indicateur pour le mode actuel
+OPTIONS="⚡ Performance
+⚖️ Équilibré (Normal)
+🔋 Économie d'énergie"
+
+# Afficher le menu wofi
+CHOICE=$(echo -e "$OPTIONS" | wofi \
+    --dmenu \
+    --prompt "Mode d'alimentation" \
+    --width 400 \
+    --height 200 \
+    --style "${HOME}/.config/wofi/style.css" \
+    --cache-file=/dev/null)
+
+# Traiter le choix
+case "$CHOICE" in
+    "⚡ Performance")
+        ~/.local/scripts/power-mode performance
+        ;;
+    "⚖️ Équilibré (Normal)")
+        ~/.local/scripts/power-mode balanced
+        ;;
+    "🔋 Économie d'énergie")
+        ~/.local/scripts/power-mode power-saver
+        ;;
+    *)
+        # Annulé ou aucun choix
+        exit 0
+        ;;
+esac

@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Installation de la gestion automatique d'alimentation (Fedora)
+
+echo "======================================"
+echo "Installation Power Mode Manager"
+echo "======================================"
+echo ""
+
+echo "📦 Distribution: Fedora"
+echo ""
+
+# Installer power-profiles-daemon
+echo "Installation de power-profiles-daemon..."
+if ! command -v powerprofilesctl &>/dev/null; then
+    sudo dnf install -y power-profiles-daemon
+
+    # Activer et démarrer le service
+    sudo systemctl enable --now power-profiles-daemon
+    echo "✅ power-profiles-daemon installé et activé"
+else
+    echo "✅ power-profiles-daemon déjà installé"
+fi
+
+echo ""
+
+# Rendre les scripts exécutables
+echo "Rendre les scripts exécutables..."
+chmod +x ~/.local/scripts/power-mode
+chmod +x ~/.local/scripts/power-mode-auto
+chmod +x ~/.local/bin/power-mode-menu
+echo "✅ Scripts rendus exécutables"
+
+echo ""
+
+# Activer le service systemd pour l'utilisateur
+echo "Activation du service automatique..."
+systemctl --user daemon-reload
+systemctl --user enable power-mode-auto.service
+systemctl --user start power-mode-auto.service
+echo "✅ Service power-mode-auto activé"
+
+echo ""
+echo "======================================"
+echo "✅ Installation terminée!"
+echo "======================================"
+echo ""
+echo "Utilisation:"
+echo "  • Menu wofi: power-mode-menu (ou bind à un raccourci)"
+echo "  • Manuel: ~/.local/scripts/power-mode [performance|balanced|power-saver]"
+echo "  • Automatique: Le daemon surveille la batterie en arrière-plan"
+echo ""
+echo "Le daemon fonctionne selon ces règles:"
+echo "  • Sur secteur (AC) → Performance"
+echo "  • Batterie > 30% → Balanced (Normal)"
+echo "  • Batterie ≤ 30% → Power-saver (Économie)"
+echo ""
+echo "Vérifier l'état du daemon:"
+echo "  systemctl --user status power-mode-auto"
+echo ""
+echo "Logs du daemon:"
+echo "  tail -f ~/.local/share/power-mode-auto.log"

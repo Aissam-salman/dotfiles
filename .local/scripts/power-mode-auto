@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+# Daemon qui surveille l'état de la batterie et change automatiquement de mode
+# Règles:
+# - Sur secteur (AC) -> Performance
+# - Sur batterie > 30% -> Balanced (Normal)
+# - Sur batterie ≤ 30% -> Power-saver (Économie)
+
+set -e
+
+LOG_FILE="${HOME}/.local/share/power-mode-auto.log"
+STATE_FILE="${HOME}/.local/share/power-mode-auto.state"
+CHECK_INTERVAL=30  # Vérifier toutes les 30 secondes
+
+# Créer le répertoire pour les logs si nécessaire
+mkdir -p "$(dirname "$LOG_FILE")"
+mkdir -p "$(dirname "$STATE_FILE")"
+
+# Fonction de log
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOG_FILE"
+}
+
+# Obtenir l'état de l'alimentation (AC ou Battery)
+get_power_state() {
+    # Chercher l'adaptateur AC
+    local ac_path="/sys/class/power_supply/AC"
+    local ac_online=0
+
+    # Essayer différents chemins possibles
+    for adapter in /sys/class/power_supply/AC* /sys/class/power_supply/ADP*; do
+        if [[ -f "${adapter}/online" ]]; then
+            ac_online=$(cat "${adapter}/online")
+            break
+        fi
+    done
+
+    if [[ "$ac_online" == "1" ]]; then
+        echo "AC"
+    else
+        echo "Battery"
+    fi
+}
+
+# Obtenir le niveau de batterie
+get_battery_level() {
+    local battery_path=""
+
+    # Trouver la batterie
+    for bat in /sys/class/power_supply/BAT*; do
+        if [[ -f "${bat}/capacity" ]]; then
+            battery_path="$bat"
+            break
+        fi
+    done
+
+    if [[ -z "$battery_path" ]]; then
+        echo "100"  # Par défaut si pas de batterie
+        return
+    fi
+
+    cat "${battery_path}/capacity"
+}
+
+# Déterminer le mode approprié
+determine_mode() {
+    local power_state="$1"
+    local battery_level="$2"
+
+    if [[ "$power_state" == "AC" ]]; then
+        echo "performance"
+    elif [[ "$battery_level" -le 30 ]]; then
+        echo "power-saver"
+    else
+        echo "balanced"
+    fi
+}
+
+# Changer le mode si nécessaire
+apply_mode() {
+    local new_mode="$1"
+    local current_mode=$(powerprofilesctl get 2>/dev/null || echo "unknown")
+
+    # Lire l'état précédent
+    local last_mode=""
+    if [[ -f "$STATE_FILE" ]]; then
+        last_mode=$(cat "$STATE_FILE")
+    fi
+
+    # Changer seulement si différent
+    if [[ "$new_mode" != "$current_mode" ]]; then
+        log "Changement de mode: $current_mode -> $new_mode"
+        ~/.local/scripts/power-mode "$new_mode"
+        echo "$new_mode" > "$STATE_FILE"
+    fi
+}
+
+# Vérifier les dépendances
+if ! command -v powerprofilesctl &>/dev/null; then
+    log "ERREUR: power-profiles-daemon n'est pas installé"
+    notify-send "⚠️ power-mode-auto" \
+        "power-profiles-daemon manquant. Installez-le avec: sudo pacman -S power-profiles-daemon" \
+        --urgency=critical
+    exit 1
+fi
+
+log "Démarrage du daemon de gestion automatique d'alimentation"
+log "Intervalle de vérification: ${CHECK_INTERVAL}s"
+
+# Boucle principale
+while true; do
+    power_state=$(get_power_state)
+    battery_level=$(get_battery_level)
+    desired_mode=$(determine_mode "$power_state" "$battery_level")
+
+    log "État: $power_state | Batterie: ${battery_level}% | Mode désiré: $desired_mode"
+
+    apply_mode "$desired_mode"
+
+    sleep "$CHECK_INTERVAL"
+done

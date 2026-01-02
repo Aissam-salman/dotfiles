@@ -19,9 +19,10 @@
 # Outils essentiels pour Hyprland
 paru -S --noconfirm --needed waybar hyprlock hyprshot wofi
 
+sudo pacman -S polkit polkit-gnome
 
 # Outils optionnels recommandés pour Hyprland:
-paru -S --noconfirm --needed wlogout wl-clipboard impala pavucontrol pika-backup swaync waypaper swww wl-clip-persist clipse
+paru -S --noconfirm --needed wlogout wl-clipboard impala pavucontrol pika-backup swaync waypaper swww wl-clip-persist clipse nwg-look catppuccin-gtk-theme-mocha
 
 echo "✅ GNOME (stable) + Hyprland (custom) installés"
 echo "💡 Choisis au login: GNOME ou Hyprland"

@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+# Script de test pour vérifier la configuration power mode
+
+echo "======================================"
+echo "Test Power Mode Manager"
+echo "======================================"
+echo ""
+
+# Couleurs
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Test 1: Vérifier power-profiles-daemon
+echo "Test 1: Vérification de power-profiles-daemon"
+if command -v powerprofilesctl &>/dev/null; then
+    echo -e "${GREEN}✅ power-profiles-daemon installé${NC}"
+    echo "   Mode actuel: $(powerprofilesctl get)"
+else
+    echo -e "${RED}❌ power-profiles-daemon NON installé${NC}"
+    echo "   Installez-le avec: sudo pacman -S power-profiles-daemon"
+fi
+echo ""
+
+# Test 2: Vérifier les scripts
+echo "Test 2: Vérification des scripts"
+scripts=(
+    "$HOME/.local/scripts/power-mode"
+    "$HOME/.local/scripts/power-mode-auto"
+    "$HOME/.local/bin/power-mode-menu"
+)
+
+for script in "${scripts[@]}"; do
+    if [[ -x "$script" ]]; then
+        echo -e "${GREEN}✅ $(basename $script) exécutable${NC}"
+    else
+        echo -e "${RED}❌ $(basename $script) NON exécutable ou manquant${NC}"
+    fi
+done
+echo ""
+
+# Test 3: Vérifier le service systemd
+echo "Test 3: Vérification du service systemd"
+if [[ -f "$HOME/.config/systemd/user/power-mode-auto.service" ]]; then
+    echo -e "${GREEN}✅ Fichier service présent${NC}"
+
+    if systemctl --user is-enabled power-mode-auto.service &>/dev/null; then
+        echo -e "${GREEN}✅ Service activé${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Service NON activé${NC}"
+        echo "   Activez-le avec: systemctl --user enable power-mode-auto.service"
+    fi
+
+    if systemctl --user is-active power-mode-auto.service &>/dev/null; then
+        echo -e "${GREEN}✅ Service en cours d'exécution${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Service NON démarré${NC}"
+        echo "   Démarrez-le avec: systemctl --user start power-mode-auto.service"
+    fi
+else
+    echo -e "${RED}❌ Fichier service manquant${NC}"
+fi
+echo ""
+
+# Test 4: Vérifier la détection de batterie
+echo "Test 4: Vérification de la détection de batterie"
+battery_found=0
+for bat in /sys/class/power_supply/BAT*; do
+    if [[ -f "${bat}/capacity" ]]; then
+        battery_level=$(cat "${bat}/capacity")
+        echo -e "${GREEN}✅ Batterie détectée: $(basename $bat)${NC}"
+        echo "   Niveau: ${battery_level}%"
+        battery_found=1
+    fi
+done
+
+if [[ $battery_found -eq 0 ]]; then
+    echo -e "${YELLOW}⚠️  Aucune batterie détectée (PC de bureau?)${NC}"
+fi
+echo ""
+
+# Test 5: Vérifier AC
+echo "Test 5: Vérification de l'adaptateur AC"
+ac_found=0
+for adapter in /sys/class/power_supply/AC* /sys/class/power_supply/ADP*; do
+    if [[ -f "${adapter}/online" ]]; then
+        ac_online=$(cat "${adapter}/online")
+        echo -e "${GREEN}✅ Adaptateur AC détecté: $(basename $adapter)${NC}"
+        if [[ "$ac_online" == "1" ]]; then
+            echo "   État: Branché ⚡"
+        else
+            echo "   État: Débranché 🔋"
+        fi
+        ac_found=1
+    fi
+done
+
+if [[ $ac_found -eq 0 ]]; then
+    echo -e "${YELLOW}⚠️  Aucun adaptateur AC détecté${NC}"
+fi
+echo ""
+
+# Test 6: Vérifier wofi
+echo "Test 6: Vérification de wofi"
+if command -v wofi &>/dev/null; then
+    echo -e "${GREEN}✅ wofi installé${NC}"
+else
+    echo -e "${RED}❌ wofi NON installé${NC}"
+    echo "   Installez-le avec: sudo pacman -S wofi"
+fi
+echo ""
+
+# Test 7: Vérifier les logs
+echo "Test 7: Logs du daemon"
+if [[ -f "$HOME/.local/share/power-mode-auto.log" ]]; then
+    echo -e "${GREEN}✅ Fichier log présent${NC}"
+    echo "   Dernières lignes:"
+    tail -n 3 "$HOME/.local/share/power-mode-auto.log" | sed 's/^/   /'
+else
+    echo -e "${YELLOW}⚠️  Aucun log (daemon pas encore démarré?)${NC}"
+fi
+echo ""
+
+echo "======================================"
+echo "Résumé"
+echo "======================================"
+echo ""
+echo "Pour installer:"
+echo "  ./runs_arch/power_mode    # Arch Linux"
+echo "  ./runs_fedora/power_mode  # Fedora"
+echo ""
+echo "Pour utiliser:"
+echo "  power-mode-menu           # Menu wofi"
+echo ""
+echo "Documentation complète:"
+echo "  cat ~/.local/scripts/README_POWER_MODE.md"
