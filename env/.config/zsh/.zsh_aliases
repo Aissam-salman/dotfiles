@@ -6,7 +6,7 @@ alias zc='cd $(z -l | fzf)'  # fuzzy cd avec z
 alias sd="cd ~ && cd \$(find * -type d | fzf --preview 'ls -l {}')"
 alias cd..="cd .."
 alias pdw="pwd"
-alias lab="cd ~/LABCODE/"
+alias lab="cd ~/Work/LAB/"
 
 # -------------------------
 # EDITOR ALIASES
