@@ -99,7 +99,7 @@
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""],
-        "on-click": "power-mode-menu"
+        "on-click": "~/.local/bin/power-mode-menu"
     },
     // "power-profiles-daemon": {
     //   "format": "{icon}",
