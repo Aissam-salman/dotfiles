@@ -16,7 +16,7 @@ bindkey '^[w' kill-region
 
 # Fonction pour chercher les DOSSIERS depuis la racine (~) et s'y déplacer
 fzf-cd-home() {
-  local dir=$(find ~ -maxdepth 3 -type d 2> /dev/null | fzf +m --prompt="📁 Dossiers (~) > ")
+  local dir=$(find ~ -maxdepth 6 -type d 2> /dev/null | fzf +m --prompt="📁 Dossiers (~) > ")
   if [[ -n "$dir" ]]; then
     cd "$dir"
     zle reset-prompt
@@ -25,7 +25,7 @@ fzf-cd-home() {
 
 # Fonction pour chercher les FICHIERS depuis la racine (~) et les ouvrir avec l'éditeur par défaut
 fzf-edit-home() {
-  local file=$(find ~ -maxdepth 3 -type f 2> /dev/null | fzf +m --prompt="📄 Fichiers (~) > ")
+  local file=$(find ~ -maxdepth 6 -type f 2> /dev/null | fzf +m --prompt="📄 Fichiers (~) > ")
   if [[ -n "$file" ]]; then
     ${EDITOR:-nano} "$file"
     zle reset-prompt
@@ -68,13 +68,15 @@ export GIT_EDITOR=nvim
 # ZSH_THEME="robbyrussell"
 zstyle ':omz:update' mode auto      # update automatically without asking
 
-plugins=(git)
-
+plugins=(git z tmux vi-mode zsh-autosuggestions zsh-syntax-highlighting)
 # -------------------------
 # INITIALIZE TOOLS
 # -------------------------
 
 eval "$(fzf --zsh)"
+
+alias nzsh="nvim ~/.zshrc"
+alias sz="source ~/.zshrc"
 
 # -------------------------
 # NAVIGATION ALIASES
