@@ -1,0 +1,89 @@
+# This is the configuration file for Ghostty.
+#
+# This template file has been automatically created at the following
+# path since Ghostty couldn't find any existing config files on your system:
+#
+#   /home/salman/.config/ghostty/config
+#
+# The template does not set any default options, since Ghostty ships
+# with sensible defaults for all options. Users should only need to set
+# options that they want to change from the default.
+#
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+#
+# Ghostty can reload the configuration while running by using the menu
+# options or the bound key (default: Command + Shift + comma on macOS and
+# Control + Shift + comma on other platforms). Not all config options can be
+# reloaded while running; some only apply to new windows and others may require
+# a full restart to take effect.
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# font-family = Iosevka
+# window-padding-x = 2
+#
+# # Spacing around the equals sign does not matter.
+# # All of these are identical:
+# key=value
+# key= value
+# key =value
+# key = value
+#
+# Aesthetic Dark Purple Theme
+# ============================
+
+# Auto-detect system theme
+window-theme = system
+theme = light:Catppuccin Latte, dark:Catppuccin Mocha
+
+# Background & Opacity
+# background = #1a0f2e
+background-opacity = 0.78
+# foreground = #e0d5f5
+
+# Padding for breathing room
+window-padding-x = 30
+window-padding-y = 30
+
+# Font settings for better aesthetics
+font-size = 13
+font-family = "MartianMono NF"
+
+# Cursor
+# cursor-color = #b794f6
+cursor-style = block
+cursor-style-blink = true
+
+# Color Palette (Purple-themed) - Commented out for system theme
+# palette = 0=#2d1b4e
+# palette = 1=#ff6b9d
+# palette = 2=#a6e3a1
+# palette = 3=#f9e2af
+# palette = 4=#89b4fa
+# palette = 5=#cba6f7
+# palette = 6=#94e2d5
+# palette = 7=#e0d5f5
+# palette = 8=#4a3866
+# palette = 9=#ff6b9d
+# palette = 10=#a6e3a1
+# palette = 11=#f9e2af
+# palette = 12=#89b4fa
+# palette = 13=#cba6f7
+# palette = 14=#94e2d5
+# palette = 15=#f5e8ff
+
+# Window appearance
+window-decoration = true
+unfocused-split-opacity = 0.7
+
+# Smooth scrolling
+mouse-scroll-multiplier = 2
+
+# Shell integration for better experience
+shell-integration-features = cursor,sudo,title
