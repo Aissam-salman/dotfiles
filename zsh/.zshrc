@@ -36,9 +36,11 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
-# Ctrl+F : chercher un dossier (~) avec fzf et s'y déplacer
+# Ctrl+F : chercher un dossier avec fzf et s'y déplacer
+FZF_NAV_PATHS=(~/Work ~/.config ~/dotfiles)
 fzf-cd-home() {
-  local dir=$(find ~ -maxdepth 3 \( -path ~/Library -o -name .git -o -name node_modules \) -prune -o -type d -print 2> /dev/null | fzf +m --prompt="📁 Dossiers (~) > ")
+  local paths=(${^FZF_NAV_PATHS}(N/))   # ignore les dossiers absents
+  local dir=$(find $paths -maxdepth 3 \( -name .git -o -name node_modules \) -prune -o -type d -print 2> /dev/null | fzf +m --prompt="📁 Dossiers > ")
   if [[ -n "$dir" ]]; then
     cd "$dir"
     zle reset-prompt
