@@ -16,7 +16,7 @@ dotfiles/
 
 ```bash
 # outils
-brew install neovim tmux starship lazygit fzf zoxide
+brew install neovim tmux starship lazygit fzf
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 

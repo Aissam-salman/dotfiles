@@ -74,5 +74,4 @@ tmn() { tmux attach -t "${1:?Usage: tmn <session>}" 2>/dev/null || tmux new -s "
 # TOOLS
 # -------------------------
 command -v fzf      >/dev/null && eval "$(fzf --zsh)"
-command -v zoxide   >/dev/null && eval "$(zoxide init zsh)"
 command -v starship >/dev/null && eval "$(starship init zsh)"
