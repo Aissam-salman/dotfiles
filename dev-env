@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+# Copy all config files from dotfiles to my system (overwrites existing ones)
+# Usage: ./dev-env [--dry]
+
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+packages=(ghostty lazygit nvim starship tmux zsh)
+dry="0"
+
+while [[ $# -gt 0 ]]; do
+    if [[ $1 == "--dry" ]]; then
+        dry="1"
+    fi
+    shift
+done
+
+execute() {
+    if [[ $dry == "1" ]]; then
+        echo "[DRY_RUN]: $*"
+    else
+        echo "[EXEC]: $*"
+        "$@"
+    fi
+}
+
+echo "--------- DEV-ENV ---------"
+
+# Copy an entry (file or dir) to $HOME, replacing what is there.
+# .config and .local are never replaced as a whole, only their children.
+copy_entry() {
+    local from=$1 to=$2
+
+    if [[ -d $from && ( $(basename "$from") == ".config" || $(basename "$from") == ".local" ) ]]; then
+        execute mkdir -p "$to"
+        for child in "$from"/* "$from"/.[!.]*; do
+            [[ -e $child ]] && copy_entry "$child" "$to/$(basename "$child")"
+        done
+    elif [[ -d $from ]]; then
+        execute rsync -a --delete --exclude .git "$from/" "$to/"
+    else
+        execute cp -a "$from" "$to"
+    fi
+}
+
+for pkg in "${packages[@]}"; do
+    for entry in "$script_dir/$pkg"/* "$script_dir/$pkg"/.[!.]*; do
+        [[ -e $entry ]] && copy_entry "$entry" "$HOME/$(basename "$entry")"
+    done
+done

@@ -24,7 +24,14 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone --recurse-submodules -b macos https://github.com/Aissam-salman/dotfiles.git ~/dotfiles
 ```
 
-Puis copier ou lier chaque fichier vers l'emplacement indiqué ci-dessus.
+Puis copier les configs (écrase celles existantes) :
+
+```bash
+./dev-env --dry   # voir ce qui sera copié
+./dev-env
+```
+
+Pour ajouter un dossier, l'ajouter à `packages` dans `dev-env`.
 
 Dans tmux, `prefix + I` installe les plugins.
 
