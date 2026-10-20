@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-echo "Install Obsidian 📝"
-sudo pacman -S obsidian --noconfirm
-echo "Done installation success Obsidian 📝"

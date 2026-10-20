@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-echo "Install neovim 🧘‍♂"
-sudo pacman -S neovim --noconfirm
-echo "Done installation success neovim 🧘‍♂"

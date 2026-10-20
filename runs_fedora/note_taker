@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-echo "Install Obsidian 📝"
-# Obsidian via COPR (unofficial but reliable)
-
-# Alternative: Use Flatpak if COPR doesn't work
-flatpak install -y flathub md.obsidian.Obsidian > /dev/null 2>&1
-
-echo "Done installation success Obsidian 📝"

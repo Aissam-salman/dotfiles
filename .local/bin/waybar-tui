@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-exec setsid kitty --class waybar-tui -e "$@"

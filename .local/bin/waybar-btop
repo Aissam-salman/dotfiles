@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-exec setsid kitty \
-  --class btop-float \
-  --title btop \
-  -e btop

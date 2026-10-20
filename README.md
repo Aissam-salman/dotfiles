@@ -1,66 +1,34 @@
-# Dotfiles
+# Dotfiles (macOS)
 
-Configuration Linux portable et minimaliste.
-
-## Structure
+Chaque dossier est un package [GNU Stow](https://www.gnu.org/software/stow/) qui reproduit l'arborescence de `$HOME`.
 
 ```
 dotfiles/
-├── env/                          # Configurations principales
-│   ├── .bashrc                   # Point d'entrée Bash
-│   ├── .zshrc                    # Point d'entrée Zsh
-│   ├── .tmux.conf                # Configuration Tmux
-│   └── .config/
-│       ├── bash/                 # Modules Bash
-│       │   ├── .bash_config      # Configuration de base
-│       │   ├── .bash_aliases     # Alias
-│       │   └── .bash_functions   # Fonctions
-│       ├── zsh/                  # Modules Zsh
-│       │   ├── .zsh_config       # Configuration de base
-│       │   ├── .zsh_aliases      # Alias
-│       │   └── .zsh_functions    # Fonctions
-│       ├── kitty/                # Terminal Kitty
-│       ├── nvim/                 # Neovim
-│       ├── git/                  # Git config
-│       ├── starship/             # Prompt Starship
-│       └── ...
-└── .local/
-    └── scripts/                  # Scripts utilitaires
-        ├── tmux-sessionizer
-        ├── tmux-session-switcher
-        └── ...
+├── ghostty/   ~/.config/ghostty/config
+├── lazygit/   ~/.config/lazygit/config.yml
+├── nvim/      ~/.config/nvim            (submodule kickstart.nvim)
+├── starship/  ~/.config/starship.toml
+├── tmux/      ~/.tmux.conf, ~/.config/tmux-sessionizer, ~/.local/scripts
+└── zsh/       ~/.zshrc                  (oh-my-zsh + starship)
 ```
 
 ## Installation
 
-Les fichiers de configuration sont gérés par `dev-env`.
-run : execute les fichier d'installation situé dans runs_arch par défaut ou runs_{distro} si spécifié.
+```bash
+# outils
+brew install stow neovim tmux starship lazygit fzf zoxide
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# dotfiles
+git clone --recurse-submodules -b macos https://github.com/Aissam-salman/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+stow -t ~ ghostty lazygit nvim starship tmux zsh
+```
 
-## Utilisation
-- Pour installer les configurations, exécutez le script `dev-env` :
-  ```bash
-  ./dev-env
-  ```
-- Cela copiera les fichiers de configuration dans les emplacements appropriés.
-- Vous pouvez personnaliser les configurations en modifiant les fichiers dans le répertoire `env/.config/`.
-- Pour lancer l'installation, utilisez la commande :
-  ```bash
-  ./run --dry --distro [distro] [script_name]
-  ```
-  où `[distro]` est optionnel et permet de spécifier une distribution particulière (par exemple, `ubuntu`, `arch`, etc.).
-- Assurez-vous que les chemins XDG sont correctement définis dans votre environnement.
+Dans tmux, `prefix + I` installe les plugins.
 
-## Configurations incluses
-- **Bash/Zsh** : Configuration modulaire avec fichiers séparés pour config, alias et fonctions
-- **Tmux** : Scripts de gestion de sessions
-- **Neovim** : Configuration complète
-- **Kitty** : Terminal avec thèmes
-- **Git** : Configuration personnalisée
-- **Starship** : Prompt minimaliste et personnalisable
-- **Alacritty** : Configuration du terminal rapide
-- **Lazygit** : Interface Git TUI
-- **Hyprland** : Configuration du gestionnaire de fenêtres (en cours)
+## Raccourcis
 
-
-
+- tmux `prefix + f` / `Ctrl+F` dans zsh : tmux-sessionizer
+- tmux `prefix + s` : changer de session, `prefix + X` : tuer une session
