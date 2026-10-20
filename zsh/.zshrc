@@ -36,8 +36,16 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
-# Ctrl+F : tmux-sessionizer
-bindkey -s '^F' 'tmux-sessionizer\n'
+# Ctrl+F : chercher un dossier (~) avec fzf et s'y déplacer
+fzf-cd-home() {
+  local dir=$(find ~ -maxdepth 3 \( -path ~/Library -o -name .git -o -name node_modules \) -prune -o -type d -print 2> /dev/null | fzf +m --prompt="📁 Dossiers (~) > ")
+  if [[ -n "$dir" ]]; then
+    cd "$dir"
+    zle reset-prompt
+  fi
+}
+zle -N fzf-cd-home
+bindkey '^F' fzf-cd-home
 
 # -------------------------
 # ALIASES

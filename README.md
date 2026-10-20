@@ -30,5 +30,6 @@ Dans tmux, `prefix + I` installe les plugins.
 
 ## Raccourcis
 
-- tmux `prefix + f` / `Ctrl+F` dans zsh : tmux-sessionizer
+- `Ctrl+F` dans zsh : chercher un dossier avec fzf et s'y déplacer
+- tmux `prefix + f` : tmux-sessionizer
 - tmux `prefix + s` : changer de session, `prefix + X` : tuer une session
