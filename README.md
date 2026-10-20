@@ -1,6 +1,6 @@
 # Dotfiles (macOS)
 
-Chaque dossier est un package [GNU Stow](https://www.gnu.org/software/stow/) qui reproduit l'arborescence de `$HOME`.
+Source de vérité de ma config macOS. Chaque dossier reproduit l'arborescence de `$HOME`.
 
 ```
 dotfiles/
@@ -16,15 +16,15 @@ dotfiles/
 
 ```bash
 # outils
-brew install stow neovim tmux starship lazygit fzf zoxide
+brew install neovim tmux starship lazygit fzf zoxide
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # dotfiles
 git clone --recurse-submodules -b macos https://github.com/Aissam-salman/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-stow -t ~ ghostty lazygit nvim starship tmux zsh
 ```
+
+Puis copier ou lier chaque fichier vers l'emplacement indiqué ci-dessus.
 
 Dans tmux, `prefix + I` installe les plugins.
 
